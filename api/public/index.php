@@ -8,7 +8,7 @@
 <body>
 <h1>
     hola
-    Ejemplo API
+    Ejemplo API php
 </h1>
 </body>
 </html>
