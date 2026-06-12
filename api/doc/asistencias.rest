@@ -1,0 +1,2 @@
+### Consulta de asistencias
+GET http://asistencia.com/asistencias

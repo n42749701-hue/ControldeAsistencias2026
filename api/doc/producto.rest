@@ -1,0 +1,2 @@
+### Consulta de productos
+GET http://asistencia.com/productos

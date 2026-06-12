@@ -1,0 +1,2 @@
+### Consulta de inscripciones
+GET http://asistencia.com/inscripciones

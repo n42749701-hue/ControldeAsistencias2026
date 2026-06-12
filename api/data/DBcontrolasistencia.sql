@@ -4,7 +4,7 @@ USE DBcontrolasistencia;
 -- creamos la tabla de cliente
 CREATE TABLE CLIENTES(
 id int not null PRIMARY KEY auto_increment,
-CI varchar(20) not null,
+CI varchar(20) not NULL,
 nombre VARCHAR(50) not NULL, 
 apellido varchar(50) not NULL,
 direccion varchar(250),

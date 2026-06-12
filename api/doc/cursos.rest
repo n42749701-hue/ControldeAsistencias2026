@@ -1,0 +1,2 @@
+### Consulta de cursos
+GET http://asistencia.com/cursos

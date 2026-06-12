@@ -1,0 +1,2 @@
+### Consulta de asignaciones
+GET http://asistencia.com/asignaciones

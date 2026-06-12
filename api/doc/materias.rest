@@ -1,0 +1,2 @@
+### Consulta de materias
+GET http://asistencia.com/materias

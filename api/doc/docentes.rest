@@ -1,0 +1,2 @@
+### Consulta de docentes
+GET http://asistencia.com/docentes

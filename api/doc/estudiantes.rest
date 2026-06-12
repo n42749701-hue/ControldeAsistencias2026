@@ -1,0 +1,2 @@
+### Consulta de estudiantes
+GET http://asistencia.com/estudiantes
