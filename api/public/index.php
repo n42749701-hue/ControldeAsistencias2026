@@ -21,6 +21,8 @@ $route->add('GET','/','UserController@getAll');
 $route->add('GET','/users','UserController@getAll'); 
 //direccion de productos
 $route->add('GET','/productos','ProductoController@getAll'); 
+$route->add('PUT','/productos/{id}','ProductoController@update');
+$route->add('POST','/productos','ProductoController@add'); 
 //direccion de estudiantes
 $route->add('GET','/estudiantes','EstudianteController@getAll');
 //direccion de asignaciones
@@ -35,4 +37,5 @@ $route->add('GET','/asistencias','AsistenciasController@getAll');
 $route->add('GET','/materias','MateriasController@getAll');
 //direccion de inscripciones
 $route->add('GET','/inscripciones','InscripcionesController@getAll');
+
 $route->run();

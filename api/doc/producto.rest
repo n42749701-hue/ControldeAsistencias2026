@@ -1,2 +1,25 @@
 ### Consulta de productos
 GET http://asistencia.com/productos
+
+### Modificar Productos
+PUT http://asistencia.com/productos/1
+Content-Type: application/json
+
+{
+  "codBarras":"750105531001",
+  "descripcion":"Arroz Integral 3kg",
+  "stock":50,
+  "precio_unitario":12.50,
+  "fecha_registro":"2026-06-12"
+}
+### Adicionar Producto
+POST http://asistencia.com/productos
+Content-Type: application/json
+
+{
+  "codBarras":"750105531021",
+  "descripcion":"Nuevo arroz 3kg",
+  "stock":50,
+  "precio_unitario":12.51,
+  "fecha_registro":"2026-06-12"
+}

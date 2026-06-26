@@ -29,4 +29,19 @@ class ConexionPDO
             return ["error" => $e->getMessage()];
         }
     }
+    // funcion para ejecutar transacion update o add
+    public static function execute($sql,array $param , $id) 
+    {
+     try{
+        $db = self::connect();
+         $stmt= $db->prepare($sql);
+         $res=$stmt->execute($param);
+         if ($id == true) {
+            return $db->lastInsertId();
+         }
+         return $res;
+     } catch(Exception $e) {
+        die("Existe error al procesar datos" . $e->getMessage());
+     }
+    }
 }
