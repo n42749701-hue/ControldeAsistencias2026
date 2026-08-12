@@ -1,14 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Control de Asistencias</title>
+    <link href="./src/styles/output.css" rel="stylesheet">
 </head>
-<body>
-    <h1>
-        Mi primara pagina
-        hola mod
-    </h1>
+<body class="min-h-screen bg-slate-100 text-slate-900">
+    <div class="min-h-screen lg:flex">
+        <aside class="border-b border-slate-200 bg-slate-950 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r lg:border-slate-800">
+            <div class="flex h-20 items-center gap-3 px-6">
+                <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-400 text-lg font-black text-slate-950">
+                    <span data-icon="clipboardCheck" data-icon-class="h-6 w-6"></span>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold uppercase tracking-wide text-cyan-200">Sistema</p>
+                    <h1 class="text-lg font-bold">Control de Asistencias</h1>
+                </div>
+            </div>
+
+            <nav class="grid gap-1 px-4 pb-5 lg:pb-8" aria-label="Menu principal">
+                <a href="#" data-view="home" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"> 
+                    <span data-icon="house" data-icon-class="h-5 w-5"></span>
+                    Inicio
+                </a>
+                <a href="#" data-view="users" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="users" data-icon-class="h-5 w-5"></span>
+                    Usuarios
+                </a>
+                <a href="#" data-view="estudiantes" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="graduationCap" data-icon-class="h-5 w-5"></span>
+                    Estudiantes
+                </a>
+                <a href="#" data-view="docentes" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="userCog" data-icon-class="h-5 w-5"></span>
+                    Docentes
+                </a>
+                <a href="#" data-view="cursos" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="school" data-icon-class="h-5 w-5"></span>
+                    Cursos
+                </a>
+                <a href="#" data-view="materias" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="bookOpen" data-icon-class="h-5 w-5"></span>
+                    Materias
+                </a>
+                <a href="#" data-view="asistencias" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="clipboardCheck" data-icon-class="h-5 w-5"></span>
+                    Asistencias
+                </a>
+                <a href="#" data-view="asignaciones" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="link" data-icon-class="h-5 w-5"></span>
+                    Asignaciones
+                </a>
+                <a href="#" data-view="inscripciones" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                    <span data-icon="filePen" data-icon-class="h-5 w-5"></span>
+                    Inscripciones
+                </a>
+            </nav>
+        </aside>
+
+        <div class="min-h-screen flex-1 lg:pl-72">
+            <header class="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-5 py-4 shadow-sm backdrop-blur lg:px-8">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-500">Panel administrativo</p>
+                        <h2 id="page-title" class="text-2xl font-bold text-slate-950">Dashboard</h2>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
+                            <span data-icon="calendarDays" data-icon-class="h-4 w-4"></span>
+                            Gestion 2026
+                        </span>
+                        <span class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-600">
+                            <span data-icon="shieldUser" data-icon-class="h-4 w-4"></span>
+                            Admin
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <main class="px-5 py-6 lg:px-8">
+                <div id="app"></div>
+            </main>
+        </div>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>

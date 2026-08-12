@@ -1,8 +1,8 @@
 ### Consulta de productos
-GET http://asistencia.com/productos
+GET http://api.asistenciasexto/productos
 
 ### Modificar Productos
-PUT http://asistencia.com/productos/1
+PUT http://api.asistenciasexto/productos/1
 Content-Type: application/json
 
 {
@@ -13,13 +13,16 @@ Content-Type: application/json
   "fecha_registro":"2026-06-12"
 }
 ### Adicionar Producto
-POST http://asistencia.com/productos
+POST http://api.asistenciasexto/productos
 Content-Type: application/json
 
 {
   "codBarras":"750105531021",
-  "descripcion":"Nuevo arroz 3kg",
+  "descripcion":"Arroz Integral 2kg",
   "stock":50,
   "precio_unitario":12.51,
   "fecha_registro":"2026-06-12"
 }
+
+### Eliminar Producto
+DELETE http://api.asistenciasexto/productos/29

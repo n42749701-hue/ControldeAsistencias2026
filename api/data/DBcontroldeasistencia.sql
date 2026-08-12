@@ -2,6 +2,15 @@ DROP DATABASE IF EXISTS DBcontroldeasistencia;
 CREATE DATABASE DBcontroldeasistencia;
 USE DBcontroldeasistencia;
 
+-- NUEVA: tabla de usuarios vinculada a empleados para el control de acceso
+CREATE TABLE USUARIOS(
+    id int not null PRIMARY KEY auto_increment,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    username varchar(50) not null UNIQUE,
+    password_hash varchar(255) not null
+)ENGINE=InnoDB;
+
 -- Tabla de estudiantes
 CREATE TABLE ESTUDIANTES(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

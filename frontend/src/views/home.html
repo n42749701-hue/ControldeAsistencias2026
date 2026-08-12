@@ -1,0 +1,112 @@
+<section class="space-y-6">
+    <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Bienvenido</p>
+                <h3 class="mt-2 text-3xl font-bold text-slate-950">Sistema de asistencia de sexto 2026</h3>
+                <p class="mt-3 max-w-2xl text-slate-600">
+                    Administra estudiantes, docentes, cursos y registros de asistencia desde un solo panel.
+                </p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-cyan-100 bg-cyan-50 px-5 py-4 text-cyan-900">
+                <span data-icon="checkCircle" data-icon-class="h-6 w-6"></span>
+                <div>
+                    <p class="text-sm font-semibold">Estado del sistema</p>
+                    <p class="mt-1 text-2xl font-bold">Activo</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-slate-500">Asistencias de hoy</p>
+                <span class="text-cyan-700" data-icon="clipboardCheck" data-icon-class="h-5 w-5"></span>
+            </div>
+            <p class="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p class="mt-2 text-sm text-slate-500">Registros pendientes de cargar</p>
+        </article>
+        <article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-slate-500">Estudiantes</p>
+                <span class="text-cyan-700" data-icon="graduationCap" data-icon-class="h-5 w-5"></span>
+            </div>
+            <p class="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p class="mt-2 text-sm text-slate-500">Inscritos en el sistema</p>
+        </article>
+        <article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-slate-500">Docentes</p>
+                <span class="text-cyan-700" data-icon="userCog" data-icon-class="h-5 w-5"></span>
+            </div>
+            <p class="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p class="mt-2 text-sm text-slate-500">Asignados a materias</p>
+        </article>
+        <article class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between gap-3">
+                <p class="text-sm font-medium text-slate-500">Cursos</p>
+                <span class="text-cyan-700" data-icon="school" data-icon-class="h-5 w-5"></span>
+            </div>
+            <p class="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p class="mt-2 text-sm text-slate-500">Disponibles para gestion</p>
+        </article>
+    </div>
+
+    <div class="grid gap-6 xl:grid-cols-3">
+        <section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
+            <div class="flex items-center gap-2">
+                <span class="text-cyan-700" data-icon="activity" data-icon-class="h-5 w-5"></span>
+                <h3 class="text-lg font-bold text-slate-950">Actividad reciente</h3>
+            </div>
+            <div class="mt-5 overflow-hidden rounded-lg border border-slate-200">
+                <table class="min-w-full divide-y divide-slate-200 text-sm">
+                    <thead class="bg-slate-50 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
+                        <tr>
+                            <th class="px-4 py-3">Modulo</th>
+                            <th class="px-4 py-3">Detalle</th>
+                            <th class="px-4 py-3">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                        <tr>
+                            <td class="px-4 py-4 font-semibold text-slate-900">Asistencias</td>
+                            <td class="px-4 py-4 text-slate-600">Listo para registrar la jornada.</td>
+                            <td class="px-4 py-4">
+                                <span class="rounded-md bg-emerald-50 px-2 py-1 text-xs font-bold text-emerald-700">Disponible</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-4 font-semibold text-slate-900">Usuarios</td>
+                            <td class="px-4 py-4 text-slate-600">Consulta de usuarios conectada al API.</td>
+                            <td class="px-4 py-4">
+                                <span class="rounded-md bg-cyan-50 px-2 py-1 text-xs font-bold text-cyan-700">Activo</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <aside class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center gap-2">
+                <span class="text-cyan-700" data-icon="gauge" data-icon-class="h-5 w-5"></span>
+                <h3 class="text-lg font-bold text-slate-950">Accesos rapidos</h3>
+            </div>
+            <div class="mt-5 grid gap-3">
+                <button data-view="asistencias" class="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-800">
+                    <span data-icon="clipboardCheck" data-icon-class="h-5 w-5"></span>
+                    Registrar asistencia
+                </button>
+                <button data-view="estudiantes" class="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-800">
+                    <span data-icon="graduationCap" data-icon-class="h-5 w-5"></span>
+                    Ver estudiantes
+                </button>
+                <button data-view="users" class="flex items-center gap-3 rounded-lg border border-slate-200 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-800">
+                    <span data-icon="users" data-icon-class="h-5 w-5"></span>
+                    Administrar usuarios
+                </button>
+            </div>
+        </aside>
+    </div>
+</section>

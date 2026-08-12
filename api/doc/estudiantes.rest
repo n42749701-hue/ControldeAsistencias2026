@@ -1,2 +1,31 @@
 ### Consulta de estudiantes
 GET http://asistencia.com/estudiantes
+
+### Modificar Estudiante
+PUT http://asistencia.com/estudiantes/1
+Content-Type: application/json
+
+{
+  "CI":"1234567",
+  "nombre":"Juan",
+  "apellido":"Perez",
+  "fecha_nacimiento":"2008-05-10",
+  "direccion":"Barrio Centro",
+  "telefono":"70011111"
+}
+
+### Adicionar Estudiante
+POST http://asistencia.com/estudiantes
+Content-Type: application/json
+
+{
+  "CI":"6789012",
+  "nombre":"Sofia",
+  "apellido":"Mamani",
+  "fecha_nacimiento":"2009-09-12",
+  "direccion":"Barrio Central",
+  "telefono":"70066666"
+}
+
+### Eliminar Estudiante
+DELETE http://asistencia.com/estudiantes/1

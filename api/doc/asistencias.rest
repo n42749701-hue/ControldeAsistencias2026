@@ -1,2 +1,29 @@
 ### Consulta de asistencias
 GET http://asistencia.com/asistencias
+
+### Modificar Asistencia
+PUT http://asistencia.com/asistencias/1
+Content-Type: application/json
+
+{
+  "cod_estudiante":1,
+  "cod_asignacion":1,
+  "fecha":"2025-03-01",
+  "estado":"Presente",
+  "observacion":"Sin novedades"
+}
+
+### Adicionar Asistencia
+POST http://asistencia.com/asistencias
+Content-Type: application/json
+
+{
+  "cod_estudiante":2,
+  "cod_asignacion":1,
+  "fecha":"2025-03-02",
+  "estado":"Ausente",
+  "observacion":"Falta injustificada"
+}
+
+### Eliminar Asistencia
+DELETE http://asistencia.com/asistencias/1
