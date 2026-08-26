@@ -1,14 +1,14 @@
-DROP DATABASE IF EXISTS DBcontrolasistencia;
-CREATE DATABASE DBcontrolasistencia;
-USE DBcontrolasistencia;
+-- DROP DATABASE IF EXISTS DBcontrolasistencia;
+-- CREATE DATABASE DBcontrolasistencia;
+-- USE DBcontrolasistencia;
 
 -- creamos la tabla de cliente
 CREATE TABLE CLIENTES(
  id int not null PRIMARY KEY auto_increment,
- ci VARCHAR(20) not null,
+ ci VARCHAR(20) not NULL,
  nombre VARCHAR(50) not NULL,
- apellidos varchar(50) not null,
- direccion varchar(250),
+ apellidos VARCHAR(50) not NULL,
+ direccion VARCHAR(250),
  telefono VARCHAR(15)
 )ENGINE=InnoDB;
 
@@ -27,7 +27,7 @@ username varchar(50) not null UNIQUE,
 password_hash varchar(255) not null,
 estado boolean default true,
 cod_empleado int not null,
-FOREIGN KEY(cod_empleado) REFERENCES empleados(id)
+FOREIGN KEY(cod_empleado) REFERENCES EMPLEADOS(id)
 )ENGINE=InnoDB;
 
 -- crear tabla del producto (Modificada con control de registro)
@@ -39,7 +39,7 @@ stock INT not NULL CHECK(stock>=0),
 precio_unitario DECIMAL(10,2) not null,
 creado_por int, -- Usuario que registró el producto
 fecha_registro datetime default now(),
-FOREIGN KEY(creado_por) REFERENCES usuarios(id)
+FOREIGN KEY(creado_por) REFERENCES USUARIOS(id)
 )ENGINE=InnoDB;
 
 -- crear la tabla pedidos (Modificada con control de registro)
@@ -50,9 +50,9 @@ fecha_compra datetime not null,
 cantidad int not null,
 cod_empleado int not null,
 creado_por int, -- Usuario que registró la venta/pedido
-FOREIGN KEY(cod_cliente) REFERENCES clientes(id),
-FOREIGN KEY(cod_empleado) REFERENCES empleados(id),
-FOREIGN KEY(creado_por) REFERENCES usuarios(id)
+FOREIGN KEY(cod_cliente) REFERENCES CLIENTES(id),
+FOREIGN KEY(cod_empleado) REFERENCES EMPLEADOS(id),
+FOREIGN KEY(creado_por) REFERENCES USUARIOS(id)
 )ENGINE=InnoDB;
 
 -- creamos la tabla relacion pedidoProducto
@@ -63,8 +63,8 @@ cod_pedido int not null,
 cantidad int not null,
 precio_unitario DECIMAL(10,2) not null,
 descuento DECIMAL(10,2) DEFAULT(0.0),
-FOREIGN KEY(cod_producto) REFERENCES productos(id),
-FOREIGN KEY(cod_pedido) REFERENCES pedidos(id)
+FOREIGN KEY(cod_producto) REFERENCES PRODUCTOS(id),
+FOREIGN KEY(cod_pedido) REFERENCES PEDIDOS(id)
 )ENGINE=InnoDB;
 
 -- crear tabla relacional empleado-pedido
@@ -73,6 +73,6 @@ cod_pedido int not null,
 cod_empleado int not null,
 fecha date not null DEFAULT(NOW()),
 PRIMARY KEY(cod_pedido,cod_empleado),
-FOREIGN KEY(cod_pedido) REFERENCES pedidos(id),
-FOREIGN KEY(cod_empleado) REFERENCES empleados(id)
+FOREIGN KEY(cod_pedido) REFERENCES PEDIDOS(id),
+FOREIGN KEY(cod_empleado) REFERENCES EMPLEADOS(id)
 )ENGINE=InnoDB;

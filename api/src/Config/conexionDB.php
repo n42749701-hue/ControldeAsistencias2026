@@ -1,5 +1,34 @@
 <?php
-require_once "config.php";
+if (!defined('HOST')) {
+    $envPath = __DIR__ . '/../../.env';
+
+    if (!file_exists($envPath)) {
+        die("ERROR No se encontro el archivo .env");
+    }
+
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+
+        if ($line === '' || strpos($line, '#') === 0 || strpos($line, '=') === false) {
+            continue;
+        }
+
+        [$key, $value] = explode('=', $line, 2);
+        $key = trim($key);
+        $value = trim($value);
+        $value = trim($value, "\"'");
+
+        putenv($key . '=' . $value);
+        $_ENV[$key] = $value;
+    }
+
+    define('HOST', getenv('DB_HOST'));
+    define('PORT', getenv('DB_PORT'));
+    define('DATABASE', getenv('DB_NAME'));
+    define('USERNAME', getenv('DB_USER'));
+    define('PASSWORD', getenv('DB_PASSWORD'));
+    define('CHARSET', getenv('DB_CHARSET') ?: 'charset=utf8');
+}
 class ConexionPDO
 {
     private static ?PDO  $cnn = null;

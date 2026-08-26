@@ -1,5 +1,5 @@
 <?php
-require_once "../src/Models/Users.php";
+require_once __DIR__ . "/../Models/Users.php";
 class UserController{
     public function getAll()
     {

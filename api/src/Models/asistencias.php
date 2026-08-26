@@ -4,7 +4,7 @@ class Asistencias
 {
     public static function all()
     {
-        $sql = "SELECT * FROM asistencias";
+        $sql = "SELECT * FROM ASISTENCIAS";
         return ConexionPDO::query($sql); //self::$users;
     }
     //actualizar asistencia

@@ -1,5 +1,5 @@
 <?php
-require_once "../src/Models/materias.php";
+require_once __DIR__ . "/../Models/materias.php";
 class MateriasController{
     public function getAll()
     {

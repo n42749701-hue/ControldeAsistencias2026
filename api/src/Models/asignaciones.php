@@ -4,7 +4,7 @@ class Asignaciones
 {
     public static function all()
     {
-        $sql = "SELECT * FROM asignaciones";
+        $sql = "SELECT * FROM ASIGNACIONES";
         return ConexionPDO::query($sql); //self::$users;
     }
 }

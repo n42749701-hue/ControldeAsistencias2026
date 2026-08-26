@@ -1,5 +1,5 @@
 <?php
-require_once "../src/Models/asistencias.php";
+require_once __DIR__ . "/../Models/asistencias.php";
 class AsistenciasController{
     public function getAll()
     {

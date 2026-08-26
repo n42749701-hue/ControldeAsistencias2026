@@ -1,5 +1,5 @@
 ### Consulta de asistencias
-GET http://asistencia.com/asistencias
+GET http://api.asistenciasexto/asistencias
 
 ### Modificar Asistencia
 PUT http://asistencia.com/asistencias/1

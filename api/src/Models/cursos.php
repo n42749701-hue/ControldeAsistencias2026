@@ -4,7 +4,7 @@ class Cursos
 {
     public static function all()
     {
-        $sql = "SELECT * FROM cursos";
+        $sql = "SELECT * FROM CURSOS";
         return ConexionPDO::query($sql); //self::$users;
     }
 }

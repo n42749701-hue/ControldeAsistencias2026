@@ -1,2 +1,2 @@
 ### Consulta de cursos
-GET http://asistencia.com/cursos
+GET http://api.asistenciasexto/cursos

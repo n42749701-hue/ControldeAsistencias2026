@@ -1,2 +1,2 @@
 ### Consulta de docentes
-GET http://asistencia.com/docentes
+GET http://api.asistenciasexto/docentes

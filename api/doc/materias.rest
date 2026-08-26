@@ -1,2 +1,2 @@
 ### Consulta de materias
-GET http://asistencia.com/materias
+GET http://api.asistenciasexto/materias

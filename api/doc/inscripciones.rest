@@ -1,2 +1,2 @@
 ### Consulta de inscripciones
-GET http://asistencia.com/inscripciones
+GET http://api.asistenciasexto/inscripciones

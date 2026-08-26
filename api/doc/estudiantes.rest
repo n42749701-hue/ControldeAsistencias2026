@@ -1,5 +1,5 @@
 ### Consulta de estudiantes
-GET http://asistencia.com/estudiantes
+GET http://api.asistenciasexto/estudiantes
 
 ### Modificar Estudiante
 PUT http://asistencia.com/estudiantes/1

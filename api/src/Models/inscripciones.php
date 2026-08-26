@@ -4,7 +4,7 @@ class Inscripciones
 {
     public static function all()
     {
-        $sql = "SELECT * FROM inscripciones";
+        $sql = "SELECT * FROM INSCRIPCIONES";
         return ConexionPDO::query($sql); //self::$users;
     }
 }

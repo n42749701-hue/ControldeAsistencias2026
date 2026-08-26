@@ -1,2 +1,2 @@
 ### Consulta de asignaciones
-GET http://asistencia.com/asignaciones
+GET http://api.asistenciasexto/asignaciones
