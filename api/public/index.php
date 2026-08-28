@@ -26,9 +26,9 @@ $route->add('POST','/productos','ProductoController@add');
 $route->add('DELETE','/productos/{id}','ProductoController@delete');
 //direccion de estudiantes
 $route->add('GET','/estudiantes','EstudianteController@getAll');
-//$route->add('PUT','/estudiantes/{id}','EstudianteController@update');
-//$route->add('POST','/estudiantes','EstudianteController@add');
-//$route->add('DELETE','/estudiantes/{id}','EstudianteController@delete');
+$route->add('PUT','/estudiantes/{id}','EstudianteController@update');
+$route->add('POST','/estudiantes','EstudianteController@add');
+$route->add('DELETE','/estudiantes/{id}','EstudianteController@delete');
 //direccion de asignaciones
 $route->add('GET','/asignaciones','AsignacionesController@getAll');
 //direccion de cursos
@@ -37,9 +37,9 @@ $route->add('GET','/cursos','CursosController@getAll');
 $route->add('GET','/docentes','DocentesController@getAll');
 //direccion de asistencias
 $route->add('GET','/asistencias','AsistenciasController@getAll');
-//$route->add('PUT','/asistencias/{id}','AsistenciasController@update');
-//$route->add('POST','/asistencias','AsistenciasController@add');
-//$route->add('DELETE','/asistencias/{id}','AsistenciasController@delete');
+$route->add('PUT','/asistencias/{id}','AsistenciasController@update');
+$route->add('POST','/asistencias','AsistenciasController@add');
+$route->add('DELETE','/asistencias/{id}','AsistenciasController@delete');
 //direccion de materias
 $route->add('GET','/materias','MateriasController@getAll');
 //direccion de inscripciones

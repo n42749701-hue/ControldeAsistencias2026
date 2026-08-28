@@ -5,4 +5,4 @@ define("DATABASE",$config['DB_NAME']);
 define("USERNAME",$config['DB_USER']);
 define("PASSWORD",$config['DB_PASSWORD']);
 define("PORT",$config['DB_PORT']);
-define("CHARSET",$config['DB_CHARSET']);
+define("CHARSET",$config['DB_CHARSET'] ?? 'utf8');

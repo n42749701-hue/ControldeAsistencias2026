@@ -17,8 +17,8 @@ class Router{
         $method=$_SERVER['REQUEST_METHOD'];
         foreach($this->routes as $route)
             {
-                $pattern=str_replace(['{id}','/'],['([0-9]+)','¬\/'],$route['route']);
-                $pattern='/^'.pattern.'$/';
+                $pattern=str_replace(['{id}','/'],['([0-9]+)','\/'],$route['route']);
+                $pattern='/^'.$pattern.'$/';
                 if($method===$route['method'] && preg_match($pattern,$uri,$matches))
                     { array_shift($matches);
                 list($controllerName,$methodName)=explode('@',$route['handler']);
@@ -28,6 +28,6 @@ class Router{
             }
             //si no encontro
             http_response_code(404);
-            echo json_encode("error"=>['Ruta no encontrada']);
+            echo json_encode(["error"=>'Ruta no encontrada']);
     }
 }
