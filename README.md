@@ -1,5 +1,5 @@
 # Sistema de Desarrollo en Clases
-## Sistema de Control de Asistencias en git
+## Sistema de Control de Asistencias
 
-### Registro de Usuarios
+### Registro de Usuario
 - Registro del personal
