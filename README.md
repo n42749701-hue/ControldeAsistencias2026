@@ -4,7 +4,7 @@
 # Nelson Koby
 ## Registro de Usuarios
 - Registro del personal
-# Resumen práctico 
+## Resumen práctico 
 
 - `git add` → prepara archivos.
 - `git commit -m "mensaje"` → guarda cambios en tu historial local.
