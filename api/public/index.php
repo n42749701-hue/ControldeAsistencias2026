@@ -5,7 +5,6 @@ if($_SERVER['REQUEST_METHOD']=='OPTIONS')
     }
 require_once __DIR__ . "/src/Router.php";
 require_once __DIR__ . "/src/Controllers/UserController.php";
-require_once __DIR__ . "/src/Controllers/ProductoController.php";
 require_once __DIR__ . "/src/Controllers/EstudianteController.php";
 require_once __DIR__ . "/src/Controllers/AsignacionesController.php";
 require_once __DIR__ . "/src/Controllers/CursosController.php";
