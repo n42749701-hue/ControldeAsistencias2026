@@ -1,40 +1,58 @@
 <?php
 include_once __DIR__ . "/../Config/conexionDB.php";
-class Asistencias
+class Users
 {
+    private static $columnasPermitidas = [
+        'username',
+        'password_hash',
+        'rol',
+        'cod_docente',
+        'cod_estudiante',
+    ];
+
     public static function all()
     {
-        $sql = "SELECT * FROM ASISTENCIAS";
+        $sql = "SELECT * FROM USUARIOS";
         return ConexionPDO::query($sql); //self::$users;
     }
-    //actualizar asistencia
+
+    public static function find($id)
+    {
+        $id = (int) $id;
+        $sql = "SELECT * FROM USUARIOS WHERE id=$id";
+        $result = ConexionPDO::query($sql);
+        return count($result) > 0 ? $result[0] : null;
+    }
+
     public static function update($id, $data)
     {
         if (isset($data['id'])){
             unset($data['id']);
         }
+
+        $data = self::prepararDatos($data);
+
         $campos=[];
         $valores=[];
-        //construir datos
         foreach($data as $columna=>$valor)
             {
                 $campos[]="$columna=:$columna";
                 $valores[":$columna"]=$valor;
             }
             $stringCampos=implode(",",$campos);
-            //preparamos la consulta
-            $sql="UPDATE asistencias SET $stringCampos WHERE id=:id";
+            $sql="UPDATE usuarios SET $stringCampos WHERE id=:id";
             $valores[':id']=$id;
             $result = ConexionPDO::execute($sql, $valores,false);
         return $result;
     }
-    //Adicionar Asistencia
+
     public static function add($data)
     {
+        $data = self::prepararDatos($data);
+
         $campos = [];
         $placeholders = [];
         $valores = [];
-        //construir datos
         foreach($data as $columna => $valor) {
                 $campos[] = $columna;
                 $placeholders[] = ":$columna";
@@ -43,17 +61,27 @@ class Asistencias
 
             $stringCampos = implode(",",$campos);
             $stringPlaceholders = implode(",",$placeholders);
-            //preparamos la consulta
-            $sql = "INSERT INTO asistencias ($stringCampos) VALUES ($stringPlaceholders)";
+            $sql = "INSERT INTO usuarios ($stringCampos) VALUES ($stringPlaceholders)";
             $result = ConexionPDO::execute($sql, $valores,true);
             return $result;
     }
-    //Eliminar Asistencia
+
     public static function delete($id)
     {
-        $sql = "DELETE FROM asistencias WHERE id=:id";
+        $sql = "DELETE FROM usuarios WHERE id=:id";
         $valores = [":id" => $id];
         $result = ConexionPDO::execute($sql, $valores, false);
         return $result;
+    }
+
+    private static function prepararDatos($data)
+    {
+        $datos = [];
+        foreach($data as $columna => $valor) {
+            if(in_array($columna, self::$columnasPermitidas)) {
+                $datos[$columna] = $valor === "" ? null : $valor;
+            }
+        }
+        return $datos;
     }
 }

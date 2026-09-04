@@ -1,13 +1,28 @@
 <?php
-require_once __DIR__ . "/../Models/asistencias.php";
-class AsistenciasController{
+require_once __DIR__ . "/../Models/docentes.php";
+class DocentesController{
     public function getAll()
     {
-        $asistencias=Asistencias::all();
-        echo json_encode($asistencias);
+        $docentes=Docentes::all();
+        echo json_encode($docentes);
          
     }
-    //actualizar asistencia
+
+    public function getById($id)
+    {
+        $docente = Docentes::find($id);
+        if($docente) {
+            echo json_encode($docente);
+            return;
+        }
+
+        http_response_code(404);
+        echo json_encode([
+            "estado" => false,
+            "message" => "Docente no encontrado",
+        ]);
+    }
+
     public function update($id)
     {
         $jsonData=file_get_contents('php://input');
@@ -35,18 +50,17 @@ class AsistenciasController{
             return;
         }
 
-        $asistencia=Asistencias::update($id,$data);
-        if($asistencia) {
+        $docente=Docentes::update($id,$data);
+        if($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia actualizada correctamente",
+                "message" => "Docente actualizado correctamente",
             ]);
             return;
         }
-        echo json_encode($asistencia);
+        echo json_encode($docente);
     }
 
-    //adicionar asistencia
     public function add()
     {
         $jsonData = file_get_contents('php://input');
@@ -74,38 +88,36 @@ class AsistenciasController{
             return;
         }
 
-        $asistencia = Asistencias::add($data);
-        if ($asistencia) {
+        $docente = Docentes::add($data);
+        if ($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia adicionada correctamente",
+                "message" => "Docente adicionado correctamente",
             ]);
             return;
         }
-        echo json_encode($asistencia);
+        echo json_encode($docente);
     }
 
-    //eliminar asistencia
     public function delete($id)
     {
-        $asistencia = Asistencias::delete($id);
-        if ($asistencia) {
+        $docente = Docentes::delete($id);
+        if ($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia eliminada correctamente",
+                "message" => "Docente eliminado correctamente",
             ]);
             return;
         }
         echo json_encode([
             "estado" => false,
-            "message" => "No se pudo eliminar la asistencia",
+            "message" => "No se pudo eliminar el docente",
         ]);
     }
 
     private function validarDatos($data)
     {
         $errores = [];
-        $estadosPermitidos = ["Presente", "Ausente", "Licencia", "Retraso"];
 
         if(!is_array($data))
         {
@@ -113,30 +125,30 @@ class AsistenciasController{
             return $errores;
         }
 
-        if(!isset($data['cod_estudiante']) || trim($data['cod_estudiante'])=="")
+        if(!isset($data['CI']) || trim($data['CI'])=="")
         {
-            $errores[] = "El campo cod_estudiante es obligatorio";
-        } elseif(!is_numeric($data['cod_estudiante'])) {
-            $errores[] = "El campo cod_estudiante debe ser numerico";
+            $errores[] = "El campo CI es obligatorio";
+        } elseif(strlen($data['CI'])>20) {
+            $errores[] = "El campo CI no debe superar los 20 caracteres";
         }
 
-        if(!isset($data['cod_asignacion']) || trim($data['cod_asignacion'])=="")
+        if(!isset($data['nombre']) || trim($data['nombre'])=="")
         {
-            $errores[] = "El campo cod_asignacion es obligatorio";
-        } elseif(!is_numeric($data['cod_asignacion'])) {
-            $errores[] = "El campo cod_asignacion debe ser numerico";
+            $errores[] = "El campo nombre es obligatorio";
+        } elseif(strlen($data['nombre'])>50) {
+            $errores[] = "El campo nombre no debe superar los 50 caracteres";
         }
 
-        if(!isset($data['fecha']) || trim($data['fecha'])=="")
+        if(!isset($data['apellido']) || trim($data['apellido'])=="")
         {
-            $errores[] = "El campo fecha es obligatorio";
+            $errores[] = "El campo apellido es obligatorio";
+        } elseif(strlen($data['apellido'])>50) {
+            $errores[] = "El campo apellido no debe superar los 50 caracteres";
         }
 
-        if(!isset($data['estado']) || trim($data['estado'])=="")
+        if(isset($data['telefono']) && strlen($data['telefono'])>15)
         {
-            $errores[] = "El campo estado es obligatorio";
-        } elseif(!in_array($data['estado'], $estadosPermitidos)) {
-            $errores[] = "El campo estado debe ser Presente, Ausente, Licencia o Retraso";
+            $errores[] = "El campo telefono no debe superar los 15 caracteres";
         }
 
         return $errores;

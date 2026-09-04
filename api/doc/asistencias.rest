@@ -1,29 +1,34 @@
 ### Consulta de asistencias
 GET http://api.asistenciasexto/asistencias
 
+### Consulta de asistencia por id
+GET http://api.asistenciasexto/asistencias/1
+
 ### Modificar Asistencia
-PUT http://asistencia.com/asistencias/1
+PUT http://api.asistenciasexto/asistencias/1
 Content-Type: application/json
 
 {
   "cod_estudiante":1,
   "cod_asignacion":1,
-  "fecha":"2025-03-01",
+  "cod_usuario_registro":2,
+  "fecha":"2026-02-23",
   "estado":"Presente",
-  "observacion":"Sin novedades"
+  "observacion":"Llegó puntual"
 }
 
 ### Adicionar Asistencia
-POST http://asistencia.com/asistencias
+POST http://api.asistenciasexto/asistencias
 Content-Type: application/json
 
 {
   "cod_estudiante":2,
   "cod_asignacion":1,
+  "cod_usuario_registro":1,
   "fecha":"2025-03-02",
   "estado":"Ausente",
   "observacion":"Falta injustificada"
 }
 
 ### Eliminar Asistencia
-DELETE http://asistencia.com/asistencias/1
+DELETE http://api.asistenciasexto/asistencias/1
