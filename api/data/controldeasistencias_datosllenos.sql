@@ -1,66 +1,79 @@
--- 1. INSERTAR DATOS EN DOCENTES
-INSERT INTO DOCENTES (CI, nombre, apellido, telefono) VALUES
-('1111111', 'Carlos', 'Mendoza', '71020304'),
-('2222222', 'Ana', 'Rodriguez', '72030405'),
-('3333333', 'Jorge', 'Vaca', '73040506'),
-('4444444', 'Elena', 'Gomez', '74050607');
+-- Usar la base de datos por defecto de Aiven
+USE defaultdb;
 
--- 2. INSERTAR DATOS EN ESTUDIANTES
-INSERT INTO ESTUDIANTES (CI, nombre, apellido, fecha_nacimiento, direccion, telefono) VALUES
-('5555555', 'Luis', 'Perez', '2010-05-12', 'Av. Bush 2do Anillo', '61011122'),
-('6666666', 'Maria', 'Suarez', '2011-08-22', 'Calle Beni 3er Anillo', '62022233'),
-('7777777', 'Pedro', 'Ortiz', '2010-01-05', 'Urb. Los Tobis', '63033344'),
-('8888888', 'Lucia', 'Rojas', '2011-11-30', 'Av. Banzer 4to Anillo', '64044455');
+-- 1. TABLA DE DOCENTES
+CREATE TABLE IF NOT EXISTS DOCENTES(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    telefono VARCHAR(15)
+) ENGINE=InnoDB;
 
--- 3. INSERTAR DATOS EN USUARIOS
--- Contraseñas de ejemplo en formato hash ficticio
-INSERT INTO USUARIOS (username, password_hash, rol, cod_docente, cod_estudiante) VALUES
-('admin01', '$2y$10$AdminHash1234567890abcdef', 'Administrador', NULL, NULL),
-('carlos.m', '$2y$10$DocenteHash1234567890abc', 'Docente', 1, NULL),
-('ana.r', '$2y$10$DocenteHash0987654321xyz', 'Docente', 2, NULL),
-('luis.p', '$2y$10$EstudianteHash1122334455', 'Estudiante', NULL, 1);
+-- 2. TABLA DE ESTUDIANTES
+CREATE TABLE IF NOT EXISTS ESTUDIANTES(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    direccion VARCHAR(250),
+    telefono VARCHAR(15)
+) ENGINE=InnoDB;
 
--- 4. INSERTAR DATOS EN CURSOS
-INSERT INTO CURSOS (nombre_curso, nivel, paralelo) VALUES
-('Primero de Secundaria', 'Secundaria', 'A'),
-('Primero de Secundaria', 'Secundaria', 'B'),
-('Segundo de Secundaria', 'Secundaria', 'A'),
-('Segundo de Secundaria', 'Secundaria', 'B');
+-- 3. TABLA DE USUARIOS
+CREATE TABLE IF NOT EXISTS USUARIOS(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    id_docente INT NULL,
+    id_estudiante INT NULL,
+    FOREIGN KEY(id_docente) REFERENCES DOCENTES(id) ON DELETE SET NULL,
+    FOREIGN KEY(id_estudiante) REFERENCES ESTUDIANTES(id) ON DELETE SET NULL
+) ENGINE=InnoDB;
 
--- 5. INSERTAR DATOS EN MATERIAS
-INSERT INTO MATERIAS (nombre_materia) VALUES
-('Matemáticas'),
-('Lenguaje y Comunicación'),
-('Física Elementar'),
-('Historia y Geografía');
+-- 4. TABLA DE CURSOS
+CREATE TABLE IF NOT EXISTS CURSOS(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre_curso VARCHAR(50) NOT NULL,
+    nivel VARCHAR(30) NOT NULL,
+    paralelo VARCHAR(10) NOT NULL
+) ENGINE=InnoDB;
 
--- 6. INSERTAR DATOS EN ASIGNACIONES (Docente - Materia - Curso)
-INSERT INTO ASIGNACIONES (cod_docente, cod_materia, cod_curso) VALUES
-(1, 1, 1), -- Carlos Mendoza dicta Matemáticas en 1ro A
-(2, 2, 1), -- Ana Rodriguez dicta Lenguaje en 1ro A
-(3, 3, 3), -- Jorge Vaca dicta Física en 2do A
-(4, 4, 4); -- Elena Gomez dicta Historia en 2do B
+-- 5. TABLA DE MATERIAS
+CREATE TABLE IF NOT EXISTS MATERIAS(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre_materia VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
 
--- 7. INSERTAR DATOS EN INSCRIPCIONES (Estudiante - Curso)
-INSERT INTO INSCRIPCIONES (cod_estudiante, cod_curso, gestion) VALUES
-(1, 1, 2026), -- Luis Perez inscrito en 1ro A
-(2, 1, 2026), -- Maria Suarez inscrita en 1ro A
-(3, 3, 2026), -- Pedro Ortiz inscrito en 2do A
-(4, 4, 2026); -- Lucia Rojas inscrita en 2do B
+-- 6. RELACIÓN DOCENTE-MATERIA-CURSO
+CREATE TABLE IF NOT EXISTS ASIGNACIONES(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cod_docente INT NOT NULL,
+    cod_materia INT NOT NULL,
+    cod_curso INT NOT NULL,
+    FOREIGN KEY(cod_docente) REFERENCES DOCENTES(id),
+    FOREIGN KEY(cod_materia) REFERENCES MATERIAS(id),
+    FOREIGN KEY(cod_curso) REFERENCES CURSOS(id)
+) ENGINE=InnoDB;
 
--- 8. INSERTAR DATOS EN ASISTENCIAS
--- Las asistencias las registra el usuario del docente (ID 2 = carlos.m o ID 3 = ana.r)
-INSERT INTO ASISTENCIAS (cod_estudiante, cod_asignacion, cod_usuario_registro, fecha, estado, observacion) VALUES
-(1, 1, 2, '2026-02-23', 'Presente', 'Llegó puntual'),
-(2, 1, 2, '2026-02-23', 'Retraso', 'Trancadera en el 3er anillo'),
-(3, 3, 3, '2026-02-23', 'Ausente', 'Sin justificativo'),
-(4, 4, 1, '2026-02-23', 'Licencia', 'Permiso médico presentado a dirección');
+-- 7. INSCRIPCIÓN DE ESTUDIANTES EN CURSOS
+CREATE TABLE IF NOT EXISTS INSCRIPCIONES(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cod_estudiante INT NOT NULL,
+    cod_curso INT NOT NULL,
+    gestion YEAR NOT NULL,
+    FOREIGN KEY(cod_estudiante) REFERENCES ESTUDIANTES(id),
+    FOREIGN KEY(cod_curso) REFERENCES CURSOS(id)
+) ENGINE=InnoDB;
 
--- SELECT * FROM ASIGNACIONES;
--- SELECT * FROM ASISTENCIAS;
--- SELECT * FROM CURSOS;
--- SELECT * FROM DOCENTES;
--- SELECT * FROM ESTUDIANTES;
--- SELECT * FROM INSCRIPCIONES;
--- SELECT * FROM MATERIAS;
--- SELECT * FROM USUARIOS;
+-- 8. REGISTRO DE ASISTENCIA (Corregida la llave foránea de estudiante)
+CREATE TABLE IF NOT EXISTS ASISTENCIAS(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    cod_estudiante INT NOT NULL,
+    cod_asignacion INT NOT NULL,
+    cod_usuario_registro INT NULL,
+    fecha DATE NOT NULL,
+    estado ENUM('Presente','Ausente','Licencia','Retraso') NOT NULL,
+    observacion VARCHAR(250),
+    FOREIGN KEY(cod_estudiante) REFERENCES ESTUDIANTES(id), -- ¡Corregido aquí!
+    FOREIGN KEY(cod_asignacion) REFERENCES ASIGNACIONES(id),
+    FOREIGN KEY(cod_usuario_registro) REFERENCES USUARIOS(id)
+) ENGINE=InnoDB;

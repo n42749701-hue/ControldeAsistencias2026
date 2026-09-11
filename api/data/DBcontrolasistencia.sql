@@ -1,6 +1,6 @@
 -- DROP DATABASE IF EXISTS DBcontrolasistencia;
 -- CREATE DATABASE DBcontrolasistencia;
--- USE DBcontrolasistencia;
+ USE DBcontrolasistencia;
 
 -- creamos la tabla de cliente
 CREATE TABLE CLIENTES(

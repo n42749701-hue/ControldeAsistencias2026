@@ -1,36 +1,65 @@
-<section class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-    <div class="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
-        <div class="flex items-center gap-3">
-            <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50 text-cyan-700">
-                <span data-icon="users" data-icon-class="h-6 w-6"></span>
-            </span>
+<section class="space-y-6">
+    <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
-                <h3 class="mt-1 text-2xl font-bold text-slate-950">Listado de usuarios</h3>
+                <h3 id="UserFormTitle" class="mt-1 text-2xl font-bold text-slate-950">Nuevo usuario</h3>
             </div>
+            <span data-icon="userPlus" data-icon-class="h-6 w-6 text-cyan-700"></span>
         </div>
-        <span class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-600">
-            <span data-icon="database" data-icon-class="h-4 w-4"></span>
-            API usuarios
-        </span>
+        <div id="UsersMessage" class="hidden"></div>
+        <form id="UserForm" class="mt-5 grid gap-4 md:grid-cols-4">
+            <input id="UserId" type="hidden">
+            <label class="text-sm font-semibold text-slate-700">Username
+                <input id="UserName" required maxlength="50" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="carlos.m">
+            </label>
+            <label class="text-sm font-semibold text-slate-700">Password hash
+                <input id="UserPassword" type="password" required maxlength="255" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Contraseña">
+            </label>
+            <label class="text-sm font-semibold text-slate-700">ID docente
+                <input id="UserTeacher" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
+            </label>
+            <label class="text-sm font-semibold text-slate-700">ID estudiante
+                <input id="UserStudent" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
+            </label>
+            <div class="flex gap-2 md:col-span-4">
+                <button type="submit" class="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">Guardar usuario</button>
+                <button id="CancelUserEdit" type="button" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Limpiar</button>
+            </div>
+        </form>
     </div>
 
-    <div class="mt-6 overflow-hidden rounded-lg border border-slate-200">
-        <table class="min-w-full divide-y divide-slate-200 text-sm">
-            <thead class="bg-slate-50 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                <tr>
-                    <th class="px-4 py-3">ID</th>
-                    <th class="px-4 py-3">Nombre</th>
-                    <th class="px-4 py-3">Apellidos</th>
-                    <th class="px-4 py-3">Email</th>
-                    <th class="px-4 py-3">Password</th>
-                </tr>
-            </thead>
-            <tbody id="UsersTableList" class="divide-y divide-slate-100 bg-white">
-                <tr>
-                    <td colspan="5" class="px-4 py-6 text-center text-slate-500">Cargando usuarios...</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50 text-cyan-700">
+                    <span data-icon="users" data-icon-class="h-6 w-6"></span>
+                </span>
+                <div>
+                    <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
+                    <h3 class="mt-1 text-2xl font-bold text-slate-950">Listado de usuarios</h3>
+                </div>
+            </div>
+            <span class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-600">
+                <span data-icon="database" data-icon-class="h-4 w-4"></span>
+                Base de asistencia
+            </span>
+        </div>
+        <div class="mt-6 overflow-hidden rounded-lg border border-slate-200">
+            <table class="min-w-full divide-y divide-slate-200 text-sm">
+                <thead class="bg-slate-50 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
+                    <tr>
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Username</th>
+                        <th class="px-4 py-3">ID docente</th>
+                        <th class="px-4 py-3">ID estudiante</th>
+                        <th class="px-4 py-3 text-right">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="UsersTableList" class="divide-y divide-slate-100 bg-white">
+                    <tr><td colspan="5" class="px-4 py-6 text-center text-slate-500">Cargando usuarios...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </section>

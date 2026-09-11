@@ -1,3 +1,4 @@
+import { initUsersCrud } from './components/UsersList.js';
 import { getUserList } from './components/UsersList.js';
 import { icon, mountIcons } from './utils/icons.js';
 
@@ -86,7 +87,7 @@ const navigateTo = async (viewName) => {
         }
 
         if (viewName === 'users') {
-            await getUserList();
+            await initUsersCrud();
         }
 
         mountIcons(app);

@@ -1,17 +1,18 @@
 <?php
 require_once __DIR__ . "/../Models/Users.php";
-class UserController{
+
+class UserController
+{
     public function getAll()
     {
-        $user=Users::all();
-        echo json_encode($user);
-         
+        $user = Users::all();
+        echo json_encode($user); 
     }
 
     public function getById($id)
     {
         $user = Users::find($id);
-        if($user) {
+        if ($user) {
             echo json_encode($user);
             return;
         }
@@ -25,40 +26,44 @@ class UserController{
 
     public function update($id)
     {
-        $jsonData=file_get_contents('php://input');
+        $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, false);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
 
-        $user=Users::update($id,$data);
-        if($user) {
+        $user = Users::update($id, $data);
+        if ($user) {
             echo json_encode([
                 "estado" => true,
                 "message" => "Usuario actualizado correctamente",
             ]);
             return;
         }
-        echo json_encode($user);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo actualizar el usuario",
+        ]);
     }
 
     public function add()
@@ -66,24 +71,23 @@ class UserController{
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, true);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
@@ -96,7 +100,12 @@ class UserController{
             ]);
             return;
         }
-        echo json_encode($user);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo crear el usuario",
+        ]);
     }
 
     public function delete($id)
@@ -109,52 +118,39 @@ class UserController{
             ]);
             return;
         }
+
+        http_response_code(400);
         echo json_encode([
             "estado" => false,
             "message" => "No se pudo eliminar el usuario",
         ]);
     }
 
-    private function validarDatos($data)
+    private function validarDatos($data, $esNuevo = false)
     {
         $errores = [];
-        $rolesPermitidos = ["Administrador", "Docente", "Estudiante"];
 
-        if(!is_array($data))
-        {
+        if (!is_array($data)) {
             $errores[] = "Los datos enviados no son validos";
             return $errores;
         }
 
-        if(!isset($data['username']) || trim($data['username'])=="")
-        {
+        if (!isset($data['username']) || trim((string) $data['username']) === "") {
             $errores[] = "El campo username es obligatorio";
-        } elseif(strlen($data['username'])>50) {
+        } elseif (strlen((string) $data['username']) > 50) {
             $errores[] = "El campo username no debe superar los 50 caracteres";
         }
 
-        if(!isset($data['password_hash']) || trim($data['password_hash'])=="")
-        {
+        if ($esNuevo && (!isset($data['password_hash']) || trim((string) $data['password_hash']) === "")) {
             $errores[] = "El campo password_hash es obligatorio";
-        } elseif(strlen($data['password_hash'])>255) {
+        } elseif (isset($data['password_hash']) && strlen((string) $data['password_hash']) > 255) {
             $errores[] = "El campo password_hash no debe superar los 255 caracteres";
         }
 
-        if(!isset($data['rol']) || trim($data['rol'])=="")
-        {
-            $errores[] = "El campo rol es obligatorio";
-        } elseif(!in_array($data['rol'], $rolesPermitidos)) {
-            $errores[] = "El campo rol debe ser Administrador, Docente o Estudiante";
-        }
-
-        if(isset($data['cod_docente']) && trim($data['cod_docente'])!="" && !is_numeric($data['cod_docente']))
-        {
-            $errores[] = "El campo cod_docente debe ser numerico";
-        }
-
-        if(isset($data['cod_estudiante']) && trim($data['cod_estudiante'])!="" && !is_numeric($data['cod_estudiante']))
-        {
-            $errores[] = "El campo cod_estudiante debe ser numerico";
+        foreach (['id_docente', 'id_estudiante'] as $campo) {
+            if (isset($data[$campo]) && $data[$campo] !== '' && (!is_numeric($data[$campo]) || (int) $data[$campo] < 1)) {
+                $errores[] = "El campo $campo debe ser un entero positivo";
+            }
         }
 
         return $errores;
