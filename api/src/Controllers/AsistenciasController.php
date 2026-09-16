@@ -1,17 +1,16 @@
 <?php
 require_once __DIR__ . "/../Models/asistencias.php";
 class AsistenciasController{
-    public function getAll()
+ public function getAll()
     {
-        $asistencias=Asistencias::all();
-        echo json_encode($asistencias);
-         
+        $asistencia = Asistencias::all();
+        echo json_encode($asistencia); 
     }
 
     public function getById($id)
     {
         $asistencia = Asistencias::find($id);
-        if($asistencia) {
+        if ($asistencia) {
             echo json_encode($asistencia);
             return;
         }
@@ -19,73 +18,74 @@ class AsistenciasController{
         http_response_code(404);
         echo json_encode([
             "estado" => false,
-            "message" => "Asistencia no encontrada",
+            "message" => "Datos de asistencia no encontrada",
         ]);
     }
 
-    //actualizar asistencia
     public function update($id)
     {
-        $jsonData=file_get_contents('php://input');
+        $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, false);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
 
-        $asistencia=Asistencias::update($id,$data);
-        if($asistencia) {
+        $asistencia = Asistencias::update($id, $data);
+        if ($asistencia) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia actualizada correctamente",
+                "message" => "Datos de la asistencia actualizados correctamente",
             ]);
             return;
         }
-        echo json_encode($asistencia);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo actualizar los datos de la asistencia",
+        ]);
     }
 
-    //adicionar asistencia
     public function add()
     {
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, true);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
@@ -94,77 +94,69 @@ class AsistenciasController{
         if ($asistencia) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia adicionada correctamente",
+                "message" => "Datos de la asistencia adicionado correctamente",
             ]);
             return;
         }
-        echo json_encode($asistencia);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo adicionar los datos de la asistencia",
+        ]);
     }
 
-    //eliminar asistencia
     public function delete($id)
     {
         $asistencia = Asistencias::delete($id);
         if ($asistencia) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Asistencia eliminada correctamente",
+                "message" => "Datos de la asistencia eliminados correctamente",
             ]);
             return;
         }
+
+        http_response_code(400);
         echo json_encode([
             "estado" => false,
-            "message" => "No se pudo eliminar la asistencia",
+            "message" => "No se pudo eliminar los datos de la asistencia",
         ]);
     }
 
-    private function validarDatos($data)
+    private function validarDatos($data, $esNuevo = false)
     {
         $errores = [];
-        $estadosPermitidos = ["Presente", "Ausente", "Licencia", "Retraso"];
 
-        if(!is_array($data))
-        {
+        if (!is_array($data)) {
             $errores[] = "Los datos enviados no son validos";
             return $errores;
         }
 
-        if(!isset($data['cod_estudiante']) || trim($data['cod_estudiante'])=="")
-        {
+        if (!isset($data['cod_estudiante']) || trim((string) $data['cod_estudiante']) === "") {
             $errores[] = "El campo cod_estudiante es obligatorio";
-        } elseif(!is_numeric($data['cod_estudiante'])) {
-            $errores[] = "El campo cod_estudiante debe ser numerico";
         }
 
-        if(!isset($data['cod_asignacion']) || trim($data['cod_asignacion'])=="")
-        {
+        if (!isset($data['cod_asignacion']) || trim((string) $data['cod_asignacion']) === "") {
             $errores[] = "El campo cod_asignacion es obligatorio";
-        } elseif(!is_numeric($data['cod_asignacion'])) {
-            $errores[] = "El campo cod_asignacion debe ser numerico";
         }
 
-        if(isset($data['cod_usuario_registro']) && trim($data['cod_usuario_registro'])!="" && !is_numeric($data['cod_usuario_registro']))
-        {
-            $errores[] = "El campo cod_usuario_registro debe ser numerico";
+        if (!isset($data['cod_usuario_registro']) || trim((string) $data['cod_usuario_registro']) === "") {
+            $errores[] = "El campo cod_usuario_registro es obligatorio";
         }
 
-        if(!isset($data['fecha']) || trim($data['fecha'])=="")
-        {
+        if (!isset($data['fecha']) || trim((string) $data['fecha']) === "") {
             $errores[] = "El campo fecha es obligatorio";
-        } elseif(!preg_match('/^\d{4}-\d{2}-\d{2}$/', $data['fecha'])) {
-            $errores[] = "El campo fecha debe tener el formato YYYY-MM-DD";
         }
 
-        if(!isset($data['estado']) || trim($data['estado'])=="")
-        {
+        if (!isset($data['estado']) || trim((string) $data['estado']) === "") {
             $errores[] = "El campo estado es obligatorio";
-        } elseif(!in_array($data['estado'], $estadosPermitidos)) {
+        } elseif (!in_array($data['estado'], ['Presente', 'Ausente', 'Licencia', 'Retraso', 'Retrasado'], true)) {
             $errores[] = "El campo estado debe ser Presente, Ausente, Licencia o Retraso";
         }
 
-        if(isset($data['observacion']) && strlen($data['observacion'])>250)
-        {
-            $errores[] = "El campo observacion no debe superar los 250 caracteres";
+        if (!isset($data['observacion']) || trim((string) $data['observacion']) === "") {
+            $errores[] = "El campo observacion es obligatorio";
         }
 
         return $errores;

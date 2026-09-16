@@ -1,2 +1,24 @@
 ### Consulta de materias
 GET http://api.asistenciasexto/materias
+
+### Consulta de materia por id
+GET http://api.asistenciasexto/materias/1
+
+### Modificar materia
+PUT http://api.asistenciasexto/materias/1
+Content-Type: application/json
+
+{
+	"nombre_materia": "Matemáticas"
+}
+
+### Adicionar materia
+POST http://api.asistenciasexto/materias
+Content-Type: application/json
+
+{
+	"nombre_materia": "Ciencias Naturales"
+}
+
+### Eliminar materia
+DELETE http://api.asistenciasexto/materias/1

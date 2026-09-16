@@ -1,2 +1,28 @@
 ### Consulta de cursos
 GET http://api.asistenciasexto/cursos
+
+### Consulta de cursos por id
+GET http://api.asistenciasexto/cursos/1
+
+### Modificar Curso
+PUT http://api.asistenciasexto/cursos/1 
+Content-Type: application/json
+
+{
+  "nombre_curso": "Curso de ejemplo",
+  "nivel": "Nivel de ejemplo",
+  "paralelo": "Paralelo de ejemplo"
+}
+
+### Adicionar Curso
+POST http://api.asistenciasexto/cursos
+Content-Type: application/json
+
+{
+  "nombre_curso": "Curso de ejemplo",
+  "nivel": "Nivel de ejemplo",
+  "paralelo": "Paralelo de ejemplo"
+}
+
+### Eliminar Curso
+DELETE http://api.asistenciasexto/cursos/1

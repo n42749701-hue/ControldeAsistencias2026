@@ -5,14 +5,13 @@ GET http://api.asistenciasexto/docentes
 GET http://api.asistenciasexto/docentes/1
 
 ### Modificar Docente
-PUT http://api.asistenciasexto/docentes
+PUT http://api.asistenciasexto/docentes/1
 Content-Type: application/json
 
 {
-  "CI":"4567890",
-  "nombre":"Maria",
-  "apellido":"Quispe",
-  "telefono":"70022222"
+  "nombre":"Juan",
+  "apellido":"Perez",
+  "telefono":"70011111"
 }
 
 ### Adicionar Docente
@@ -20,11 +19,10 @@ POST http://api.asistenciasexto/docentes
 Content-Type: application/json
 
 {
-  "CI":"9876543",
-  "nombre":"Carlos",
-  "apellido":"Mamani",
-  "telefono":"70033333"
+  "nombre":"Juanito",
+  "apellido":"Perezoso",
+  "telefono":"70022222"
 }
 
 ### Eliminar Docente
-DELETE http://api.asistenciasexto/docentes/1
+DELETE http://api.asistenciasexto/docentes/7

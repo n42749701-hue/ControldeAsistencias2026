@@ -1,2 +1,28 @@
 ### Consulta de inscripciones
 GET http://api.asistenciasexto/inscripciones
+
+### Consulta de inscripcion por id
+GET http://api.asistenciasexto/inscripciones/1
+
+### Modificar inscripcion
+PUT http://api.asistenciasexto/inscripciones/1
+Content-Type: application/json
+
+{
+	"cod_estudiante": 1,
+	"cod_curso": 1,
+	"gestion": 2026
+}
+
+### Adicionar inscripcion
+POST http://api.asistenciasexto/inscripciones
+Content-Type: application/json
+
+{
+	"cod_estudiante": 1,
+	"cod_curso": 1,
+	"gestion": 2026
+}
+
+### Eliminar inscripcion
+DELETE http://api.asistenciasexto/inscripciones/1

@@ -13,81 +13,77 @@ class Asistencias
 
     public static function all()
     {
-        $sql = "SELECT * FROM ASISTENCIAS";
-        return ConexionPDO::query($sql); //self::$users;
+        return ConexionPDO::query("SELECT id, cod_estudiante, cod_asignacion, cod_usuario_registro, fecha, estado, observacion FROM ASISTENCIAS ORDER BY id DESC");
     }
 
     public static function find($id)
     {
-        $id = (int) $id;
-        $sql = "SELECT * FROM ASISTENCIAS WHERE id=$id";
-        $result = ConexionPDO::query($sql);
+        $sql = "SELECT id, cod_estudiante, cod_asignacion, cod_usuario_registro, fecha, estado, observacion FROM ASISTENCIAS WHERE id=:id";
+        $result = ConexionPDO::query($sql, [':id' => (int) $id]);
         return count($result) > 0 ? $result[0] : null;
     }
 
-    //actualizar asistencia
     public static function update($id, $data)
     {
-        if (isset($data['id'])){
+        if (isset($data['id'])) {
             unset($data['id']);
         }
 
         $data = self::prepararDatos($data);
 
-        $campos=[];
-        $valores=[];
-        //construir datos
-        foreach($data as $columna=>$valor)
-            {
-                $campos[]="$columna=:$columna";
-                $valores[":$columna"]=$valor;
-            }
-            $stringCampos=implode(",",$campos);
-            //preparamos la consulta
-            $sql="UPDATE asistencias SET $stringCampos WHERE id=:id";
-            $valores[':id']=$id;
-            $result = ConexionPDO::execute($sql, $valores,false);
-        return $result;
+        if (count($data) === 0) {
+            return 0;
+        }
+
+        $campos = [];
+        $valores = [];
+        foreach ($data as $columna => $valor) {
+            $campos[] = "$columna=:$columna";
+            $valores[":$columna"] = $valor;
+        }
+
+        $sql = "UPDATE ASISTENCIAS SET " . implode(',', $campos) . " WHERE id=:id";
+        $valores[':id'] = (int) $id;
+        return ConexionPDO::execute($sql, $valores);
     }
-    //Adicionar Asistencia
+
     public static function add($data)
     {
         $data = self::prepararDatos($data);
+        if (count($data) === 0) {
+            return 0;
+        }
 
         $campos = [];
         $placeholders = [];
         $valores = [];
-        //construir datos
-        foreach($data as $columna => $valor) {
-                $campos[] = $columna;
-                $placeholders[] = ":$columna";
-                $valores[":$columna"] = $valor;
-            }
+        foreach ($data as $columna => $valor) {
+            $campos[] = $columna;
+            $placeholders[] = ":$columna";
+            $valores[":$columna"] = $valor;
+        }
 
-            $stringCampos = implode(",",$campos);
-            $stringPlaceholders = implode(",",$placeholders);
-            //preparamos la consulta
-            $sql = "INSERT INTO asistencias ($stringCampos) VALUES ($stringPlaceholders)";
-            $result = ConexionPDO::execute($sql, $valores,true);
-            return $result;
+        $sql = "INSERT INTO ASISTENCIAS (" . implode(',', $campos) . ") VALUES (" . implode(',', $placeholders) . ")";
+        return ConexionPDO::execute($sql, $valores, true);
     }
-    //Eliminar Asistencia
+
     public static function delete($id)
     {
-        $sql = "DELETE FROM asistencias WHERE id=:id";
+        $sql = "DELETE FROM ASISTENCIAS WHERE id=:id";
         $valores = [":id" => $id];
-        $result = ConexionPDO::execute($sql, $valores, false);
-        return $result;
+        return ConexionPDO::execute($sql, $valores);
     }
 
     private static function prepararDatos($data)
     {
         $datos = [];
-        foreach($data as $columna => $valor) {
-            if(in_array($columna, self::$columnasPermitidas)) {
-                $datos[$columna] = $valor === "" ? null : $valor;
+        foreach ($data as $columna => $valor) {
+            if (in_array($columna, self::$columnasPermitidas, true)) {
+                if ($columna === 'estado' && $valor === 'Retrasado') {
+                    $valor = 'Retraso';
+                }
+                $datos[$columna] = is_string($valor) ? trim($valor) : $valor;
             }
         }
         return $datos;
-    }
-}
+    }}

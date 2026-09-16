@@ -2,58 +2,85 @@
 include_once __DIR__ . "/../Config/conexionDB.php";
 class Estudiantes
 {
+
+    private static $columnasPermitidas = [
+        'nombre',
+        'apellido',
+        'direccion',
+        'telefono',
+    ];
+
     public static function all()
     {
-        $sql = "SELECT * FROM ESTUDIANTES";
-        return ConexionPDO::query($sql); //self::$users;
+        return ConexionPDO::query("SELECT id, nombre, apellido, direccion, telefono FROM ESTUDIANTES ORDER BY id DESC");
     }
-    //actualizar estudiante
+
+    public static function find($id)
+    {
+        $sql = "SELECT id, nombre, apellido, direccion, telefono FROM ESTUDIANTES WHERE id=:id";
+        $result = ConexionPDO::query($sql, [':id' => (int) $id]);
+        return count($result) > 0 ? $result[0] : null;
+    }
+
     public static function update($id, $data)
     {
-        if (isset($data['id'])){
+        if (isset($data['id'])) {
             unset($data['id']);
         }
-        $campos=[];
-        $valores=[];
-        //construir datos
-        foreach($data as $columna=>$valor)
-            {
-                $campos[]="$columna=:$columna";
-                $valores[":$columna"]=$valor;
-            }
-            $stringCampos=implode(",",$campos);
-            //preparamos la consulta
-            $sql="UPDATE estudiantes SET $stringCampos WHERE id=:id";
-            $valores[':id']=$id;
-            $result = ConexionPDO::execute($sql, $valores,false);
-        return $result;
+
+        $data = self::prepararDatos($data);
+
+        if (count($data) === 0) {
+            return 0;
+        }
+
+        $campos = [];
+        $valores = [];
+        foreach ($data as $columna => $valor) {
+            $campos[] = "$columna=:$columna";
+            $valores[":$columna"] = $valor;
+        }
+
+        $sql = "UPDATE ESTUDIANTES SET " . implode(',', $campos) . " WHERE id=:id";
+        $valores[':id'] = (int) $id;
+        return ConexionPDO::execute($sql, $valores);
     }
-    //Adicionar Estudiante
+
     public static function add($data)
     {
+        $data = self::prepararDatos($data);
+        if (count($data) === 0) {
+            return 0;
+        }
+
         $campos = [];
         $placeholders = [];
         $valores = [];
-        //construir datos
-        foreach($data as $columna => $valor) {
-                $campos[] = $columna;
-                $placeholders[] = ":$columna";
-                $valores[":$columna"] = $valor;
-            }
+        foreach ($data as $columna => $valor) {
+            $campos[] = $columna;
+            $placeholders[] = ":$columna";
+            $valores[":$columna"] = $valor;
+        }
 
-            $stringCampos = implode(",",$campos);
-            $stringPlaceholders = implode(",",$placeholders);
-            //preparamos la consulta
-            $sql = "INSERT INTO estudiantes ($stringCampos) VALUES ($stringPlaceholders)";
-            $result = ConexionPDO::execute($sql, $valores,true);
-            return $result;
+        $sql = "INSERT INTO ESTUDIANTES (" . implode(',', $campos) . ") VALUES (" . implode(',', $placeholders) . ")";
+        return ConexionPDO::execute($sql, $valores, true);
     }
-    //Eliminar Estudiante
+
     public static function delete($id)
     {
-        $sql = "DELETE FROM estudiantes WHERE id=:id";
+        $sql = "DELETE FROM ESTUDIANTES WHERE id=:id";
         $valores = [":id" => $id];
-        $result = ConexionPDO::execute($sql, $valores, false);
-        return $result;
+        return ConexionPDO::execute($sql, $valores);
+    }
+
+    private static function prepararDatos($data)
+    {
+        $datos = [];
+        foreach ($data as $columna => $valor) {
+            if (in_array($columna, self::$columnasPermitidas, true)) {
+                $datos[$columna] = is_string($valor) ? trim($valor) : $valor;
+            }
+        }
+        return $datos;
     }
 }

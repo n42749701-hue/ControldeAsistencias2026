@@ -1,17 +1,15 @@
 <?php
 require_once __DIR__ . "/../Models/docentes.php";
-class DocentesController{
-    public function getAll()
+class DocentesController{ public function getAll()
     {
-        $docentes=Docentes::all();
-        echo json_encode($docentes);
-         
+        $docente = Docentes::all();
+        echo json_encode($docente); 
     }
 
     public function getById($id)
     {
         $docente = Docentes::find($id);
-        if($docente) {
+        if ($docente) {
             echo json_encode($docente);
             return;
         }
@@ -25,40 +23,44 @@ class DocentesController{
 
     public function update($id)
     {
-        $jsonData=file_get_contents('php://input');
+        $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, false);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
 
-        $docente=Docentes::update($id,$data);
-        if($docente) {
+        $docente = Docentes::update($id, $data);
+        if ($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Docente actualizado correctamente",
+                "message" => "Datos del docente actualizados correctamente",
             ]);
             return;
         }
-        echo json_encode($docente);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo actualizar los datos del docente",
+        ]);
     }
 
     public function add()
@@ -66,24 +68,23 @@ class DocentesController{
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
 
-        if(json_last_error()!=JSON_ERROR_NONE)
-        {
-            echo json_encode(
-            [
-                "status"=>"error codificacion",
-                "message"=>json_last_error_msg(),
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error codificacion",
+                "message" => json_last_error_msg() ?: "JSON inválido",
             ]);
             return;
         }
 
-        $errores = $this->validarDatos($data);
+        $errores = $this->validarDatos($data, true);
 
-        if(count($errores)>0)
-        {
+        if (count($errores) > 0) {
+            http_response_code(422);
             echo json_encode([
                 "status" => "error",
                 "message" => "Existen errores de validacion",
-                "errores" => $errores
+                "errores" => $errores,
             ]);
             return;
         }
@@ -92,11 +93,16 @@ class DocentesController{
         if ($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Docente adicionado correctamente",
+                "message" => "Datos del docente adicionado correctamente",
             ]);
             return;
         }
-        echo json_encode($docente);
+
+        http_response_code(400);
+        echo json_encode([
+            "estado" => false,
+            "message" => "No se pudo adicionar los datos del docente",
+        ]);
     }
 
     public function delete($id)
@@ -105,52 +111,44 @@ class DocentesController{
         if ($docente) {
             echo json_encode([
                 "estado" => true,
-                "message" => "Docente eliminado correctamente",
+                "message" => "Datos del docente eliminados correctamente",
             ]);
             return;
         }
+
+        http_response_code(400);
         echo json_encode([
             "estado" => false,
-            "message" => "No se pudo eliminar el docente",
+            "message" => "No se pudo eliminar los datos del docente",
         ]);
     }
 
-    private function validarDatos($data)
+    private function validarDatos($data, $esNuevo = false)
     {
         $errores = [];
 
-        if(!is_array($data))
-        {
+        if (!is_array($data)) {
             $errores[] = "Los datos enviados no son validos";
             return $errores;
         }
 
-        if(!isset($data['CI']) || trim($data['CI'])=="")
-        {
-            $errores[] = "El campo CI es obligatorio";
-        } elseif(strlen($data['CI'])>20) {
-            $errores[] = "El campo CI no debe superar los 20 caracteres";
-        }
-
-        if(!isset($data['nombre']) || trim($data['nombre'])=="")
-        {
+        if (!isset($data['nombre']) || trim((string) $data['nombre']) === "") {
             $errores[] = "El campo nombre es obligatorio";
-        } elseif(strlen($data['nombre'])>50) {
+        } elseif (strlen((string) $data['nombre']) > 50) {
             $errores[] = "El campo nombre no debe superar los 50 caracteres";
         }
 
-        if(!isset($data['apellido']) || trim($data['apellido'])=="")
-        {
+        if ($esNuevo && (!isset($data['apellido']) || trim((string) $data['apellido']) === "")) {
             $errores[] = "El campo apellido es obligatorio";
-        } elseif(strlen($data['apellido'])>50) {
+        } elseif (strlen((string) $data['apellido']) > 50) {
             $errores[] = "El campo apellido no debe superar los 50 caracteres";
         }
 
-        if(isset($data['telefono']) && strlen($data['telefono'])>15)
-        {
+        if ($esNuevo && (!isset($data['telefono']) || trim((string) $data['telefono']) === "")) {
+            $errores[] = "El campo telefono es obligatorio";
+        } elseif (strlen((string) $data['telefono']) > 15) {
             $errores[] = "El campo telefono no debe superar los 15 caracteres";
         }
 
         return $errores;
-    }
-}
+    }}

@@ -9,12 +9,12 @@ PUT http://api.asistenciasexto/asistencias/1
 Content-Type: application/json
 
 {
-  "cod_estudiante":1,
-  "cod_asignacion":1,
-  "cod_usuario_registro":2,
-  "fecha":"2026-02-23",
-  "estado":"Presente",
-  "observacion":"Llegó puntual"
+  "cod_estudiante": 1,
+  "cod_asignacion": 1,
+  "cod_usuario_registro": 1,
+  "fecha": "2024-06-01",
+  "estado": "Retraso",
+  "observacion": "Asistencia registrada correctamente"
 }
 
 ### Adicionar Asistencia
@@ -22,13 +22,13 @@ POST http://api.asistenciasexto/asistencias
 Content-Type: application/json
 
 {
-  "cod_estudiante":2,
-  "cod_asignacion":1,
-  "cod_usuario_registro":1,
-  "fecha":"2025-03-02",
-  "estado":"Ausente",
-  "observacion":"Falta injustificada"
+  "cod_estudiante": 1,
+  "cod_asignacion": 1,
+  "cod_usuario_registro": 1,
+  "fecha": "2024-06-01",
+  "estado": "Presente",
+  "observacion": "Asistencia registrada correctamente"
 }
 
 ### Eliminar Asistencia
-DELETE http://api.asistenciasexto/asistencias/1
+DELETE http://api.asistenciasexto/asistencias/6

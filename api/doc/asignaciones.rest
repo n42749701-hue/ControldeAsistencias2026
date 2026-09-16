@@ -1,2 +1,28 @@
 ### Consulta de asignaciones
 GET http://api.asistenciasexto/asignaciones
+
+### Consulta de asignaciones por id
+GET http://api.asistenciasexto/asignaciones/1
+
+### Modificar Asignaciones
+PUT http://api.asistenciasexto/asignaciones/1
+Content-Type: application/json
+
+{
+  "cod_docente": 1,
+  "cod_materia": 1,
+  "cod_curso": 1
+}
+
+### Adicionar Asignacion    
+POST http://api.asistenciasexto/asignaciones
+Content-Type: application/json
+
+{
+  "cod_docente": 1,
+  "cod_materia": 2,
+  "cod_curso": 3
+}
+
+### Eliminar Asignacion
+DELETE http://api.asistenciasexto/asignaciones/4
