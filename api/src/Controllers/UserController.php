@@ -50,6 +50,11 @@ class UserController
             return;
         }
 
+        if (isset($data['password']) && $data['password'] !== '') {
+            $data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        }
+        unset($data['password']);
+
         $user = Users::update($id, $data);
         if ($user) {
             echo json_encode([
@@ -91,6 +96,9 @@ class UserController
             ]);
             return;
         }
+
+        $data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        unset($data['password']);
 
         $user = Users::add($data);
         if ($user) {
@@ -141,10 +149,14 @@ class UserController
             $errores[] = "El campo username no debe superar los 50 caracteres";
         }
 
-        if ($esNuevo && (!isset($data['password_hash']) || trim((string) $data['password_hash']) === "")) {
-            $errores[] = "El campo password_hash es obligatorio";
-        } elseif (isset($data['password_hash']) && strlen((string) $data['password_hash']) > 255) {
-            $errores[] = "El campo password_hash no debe superar los 255 caracteres";
+        if ($esNuevo && (!isset($data['password']) || !is_string($data['password']) || trim($data['password']) === "")) {
+            $errores[] = "El campo password es obligatorio";
+        } elseif (isset($data['password']) && !is_string($data['password'])) {
+            $errores[] = "El campo password debe ser texto";
+        } elseif (isset($data['password']) && $data['password'] !== '' && trim($data['password']) === '') {
+            $errores[] = "La contraseña no puede contener solo espacios";
+        } elseif (isset($data['password']) && strlen($data['password']) > 72) {
+            $errores[] = "La contraseña no debe superar los 72 bytes";
         }
 
         foreach (['id_docente', 'id_estudiante'] as $campo) {

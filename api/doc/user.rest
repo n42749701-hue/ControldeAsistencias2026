@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
   "username": "mquispe2",
-  "password_hash": "$2y$10$hash_de_ejemplo2",
+  "password": "cambia-esta-clave",
   "id_docente": 1,
   "id_estudiante": null
 }
@@ -21,11 +21,10 @@ Content-Type: application/json
 
 {
   "username": "admin22",
-  "password_hash": "$2y$10$hash_de_ejemplo",
+  "password": "cambia-esta-clave",
   "id_docente": null,
   "id_estudiante": null
 }
 
 ### Eliminar Usuario
 DELETE http://api.asistenciasexto/users/14
-

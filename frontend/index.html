@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Asistencias</title>
+    <base href="http://frontend.asistenciasexto/">
     <link href="./src/styles/output.css" rel="stylesheet">
 </head>
+
 <body class="min-h-screen bg-slate-100 text-slate-900">
     <div class="min-h-screen lg:flex">
         <aside class="border-b border-slate-200 bg-slate-950 text-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r lg:border-slate-800">
@@ -22,17 +24,18 @@
             <nav class="grid gap-1 px-4 pb-5 lg:pb-8" aria-label="Menu principal">
                 <a href="#" data-view="home" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white"> 
                     <span data-icon="house" data-icon-class="h-5 w-5"></span>
+                    
                     Inicio
                 </a>
                 <a href="#" data-view="users" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
                     <span data-icon="users" data-icon-class="h-5 w-5"></span>
                     Usuarios
                 </a>
-                <a href="#" data-view="estudiantes" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                <a href="#" data-view="students" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
                     <span data-icon="graduationCap" data-icon-class="h-5 w-5"></span>
                     Estudiantes
                 </a>
-                <a href="#" data-view="docentes" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
+                <!-- <a href="#" data-view="docentes" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
                     <span data-icon="userCog" data-icon-class="h-5 w-5"></span>
                     Docentes
                 </a>
@@ -55,7 +58,7 @@
                 <a href="#" data-view="inscripciones" class="nav-link flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 hover:text-white">
                     <span data-icon="filePen" data-icon-class="h-5 w-5"></span>
                     Inscripciones
-                </a>
+                </a> -->
             </nav>
         </aside>
 
@@ -64,7 +67,7 @@
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm font-medium text-slate-500">Panel administrativo</p>
-                        <h2 id="page-title" class="text-2xl font-bold text-slate-950">Dashboard</h2>
+                        <h2 id="pagetitle" class="text-2xl font-bold text-slate-950">Dashboard</h2>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">

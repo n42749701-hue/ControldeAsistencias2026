@@ -1,118 +1,55 @@
 import { initUsersCrud } from './components/UsersList.js';
-import { getUserList } from './components/UsersList.js';
-import { icon, mountIcons } from './utils/icons.js';
 
 const app = document.getElementById('app');
-const pageTitle = document.getElementById('page-title');
+const pageTitle = document.getElementById('pagetitle');
+const navLinks = document.querySelectorAll('[data-view]');
 
 const titles = {
     home: 'Dashboard',
     users: 'Usuarios',
-    estudiantes: 'Estudiantes',
-    docentes: 'Docentes',
-    cursos: 'Cursos',
-    materias: 'Materias',
-    asistencias: 'Asistencias',
-    asignaciones: 'Asignaciones',
-    inscripciones: 'Inscripciones',
+    students: 'Estudiantes',
 };
-
-const moduleDescriptions = {
-    estudiantes: 'Gestiona la informacion de los estudiantes registrados en el sistema.',
-    docentes: 'Organiza los docentes y sus datos principales.',
-    cursos: 'Administra cursos disponibles para la gestion academica.',
-    materias: 'Consulta y organiza las materias del sistema.',
-    asistencias: 'Registra y revisa la asistencia por curso, materia y fecha.',
-    asignaciones: 'Relaciona docentes, cursos y materias.',
-    inscripciones: 'Revisa las inscripciones activas de estudiantes.',
-};
-
-const loadHtmlView = async (viewName) => {
-    const response = await fetch(`./src/views/${viewName}.html`);
-    if (!response.ok) {
-        throw new Error(`No se pudo cargar la vista ${viewName}`);
-    }
-    app.innerHTML = await response.text();
-};
-
-const renderModuleView = (viewName) => {
-    const title = titles[viewName] ?? 'Modulo';
-    const description = moduleDescriptions[viewName] ?? 'Modulo administrativo del sistema.';
-
-    app.innerHTML = `
-        <section class="space-y-6">
-            <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-                <div class="flex items-center gap-3">
-                    <span class="flex h-11 w-11 items-center justify-center rounded-lg bg-cyan-50 text-cyan-700">
-                        ${icon('layers', 'h-6 w-6')}
-                    </span>
-                    <div>
-                        <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Modulo</p>
-                        <h3 class="mt-1 text-3xl font-bold text-slate-950">${title}</h3>
-                    </div>
-                </div>
-                <p class="mt-3 max-w-2xl text-slate-600">${description}</p>
-            </div>
-
-            <div class="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center shadow-sm">
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
-                    ${icon('database', 'h-6 w-6')}
-                </div>
-                <p class="text-lg font-bold text-slate-900">Vista lista para conectar</p>
-                <p class="mt-2 text-slate-500">Puedes crear <span class="font-semibold text-slate-700">src/views/${viewName}.html</span> y este menu la cargara automaticamente.</p>
-            </div>
-        </section>
-    `;
-};
-
-const setActiveLink = (viewName) => {
-    document.querySelectorAll('.nav-link').forEach((link) => {
-        const isActive = link.dataset.view === viewName;
-        link.classList.toggle('bg-cyan-400', isActive);
-        link.classList.toggle('text-slate-950', isActive);
-        link.classList.toggle('shadow-sm', isActive);
-        link.classList.toggle('text-slate-200', !isActive);
+function setActiveLink(view) {
+    navLinks.forEach(link => {
+        link.classList.remove('bg-indigo-600', 'text-white');
+        link.classList.add('text-slate-300', 'hover:bg-slate-700', 'hover:text-white');
+        if (link.dataset.view === view) {
+            link.classList.add('bg-indigo-600', 'text-white');
+            link.classList.remove('text-slate-300', 'hover:bg-slate-700', 'hover:text-white');
+        }
     });
-};
+}
 
-const navigateTo = async (viewName) => {
-    pageTitle.textContent = titles[viewName] ?? 'Dashboard';
-    setActiveLink(viewName);
-
-    try {
-        if (viewName === 'home' || viewName === 'users') {
-            await loadHtmlView(viewName);
-        } else {
-            renderModuleView(viewName);
-        }
-
-        if (viewName === 'users') {
-            await initUsersCrud();
-        }
-
-        mountIcons(app);
-    } catch (error) {
-        app.innerHTML = `
-            <section class="rounded-lg border border-red-200 bg-red-50 p-6 text-red-800">
-                <div class="flex items-center gap-3">
-                    ${icon('activity', 'h-5 w-5')}
-                    <h3 class="text-lg font-bold">No se pudo cargar la pagina</h3>
-                </div>
-                <p class="mt-2 text-sm">${error.message}</p>
-            </section>
-        `;
+const views = {
+    home: async () => {
+        const res = await fetch('./src/views/home.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.home;
+        setActiveLink('home');
+    },
+    users: async () => {
+        const res = await fetch('./src/views/users.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.users;
+        setActiveLink('users');
+        await initUsersCrud();
+    },
+    students: async () => {
+        const res = await fetch('./src/views/students.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.students;
+        setActiveLink('students');
     }
 };
 
-document.addEventListener('click', async (event) => {
-    const link = event.target.closest('[data-view]');
-    if (!link) {
-        return;
-    }
-
-    event.preventDefault();
-    await navigateTo(link.dataset.view);
+navLinks.forEach(link => {
+    link.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const view = link.dataset.view;
+        if (views[view]) {
+            await views[view]();
+        }
+    });
 });
 
-await navigateTo('home');
-mountIcons();
+views.home();

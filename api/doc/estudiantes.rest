@@ -2,14 +2,14 @@
 GET http://api.asistenciasexto/estudiantes
 
 ### Modificar Estudiante
-PUT http://api.asistenciasexto/estudiantes/1
+PUT http://api.asistenciasexto/estudiantes/8
 Content-Type: application/json
 
 {
   "nombre":"Juan",
-  "apellido":"Perez",
-  "direccion":"Calle Falsa 123",
-  "telefono":"70011111"
+  "apellido":"Pereira",
+  "direccion":"Calle Verdadera",
+  "telefono":"72222222"
 }
 
 ### Adicionar Estudiante

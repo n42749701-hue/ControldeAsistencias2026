@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ### Eliminar Asistencia
-DELETE http://api.asistenciasexto/asistencias/6
+DELETE http://api.asistenciasexto/asistencias/7

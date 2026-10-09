@@ -14,7 +14,7 @@ Content-Type: application/json
   "cod_curso": 1
 }
 
-### Adicionar Asignacion    
+### Adicionar Asignaciones
 POST http://api.asistenciasexto/asignaciones
 Content-Type: application/json
 
@@ -24,5 +24,5 @@ Content-Type: application/json
   "cod_curso": 3
 }
 
-### Eliminar Asignacion
+### Eliminar Asignaciones
 DELETE http://api.asistenciasexto/asignaciones/4

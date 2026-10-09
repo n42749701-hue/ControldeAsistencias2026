@@ -1,32 +1,38 @@
 <section class="space-y-6">
-    <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-        <div class="flex items-center justify-between">
+    <div class="space-y-4">
+        <div class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
-                <h3 id="UserFormTitle" class="mt-1 text-2xl font-bold text-slate-950">Nuevo usuario</h3>
+                <h3 class="mt-1 text-2xl font-bold text-slate-950">Usuarios</h3>
             </div>
-            <span data-icon="userPlus" data-icon-class="h-6 w-6 text-cyan-700"></span>
+            <button id="ToggleUserForm" type="button" aria-expanded="false" aria-controls="UserFormPanel" class="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">
+                <span data-icon="userPlus" data-icon-class="h-4 w-4"></span>
+                <span id="UserFormToggleLabel">Agregar usuario</span>
+            </button>
         </div>
-        <div id="UsersMessage" class="hidden"></div>
-        <form id="UserForm" class="mt-5 grid gap-4 md:grid-cols-4">
-            <input id="UserId" type="hidden">
-            <label class="text-sm font-semibold text-slate-700">Username
-                <input id="UserName" required maxlength="50" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="carlos.m">
-            </label>
-            <label class="text-sm font-semibold text-slate-700">Password hash
-                <input id="UserPassword" type="password" required maxlength="255" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Contraseña">
-            </label>
-            <label class="text-sm font-semibold text-slate-700">ID docente
-                <input id="UserTeacher" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
-            </label>
-            <label class="text-sm font-semibold text-slate-700">ID estudiante
-                <input id="UserStudent" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
-            </label>
-            <div class="flex gap-2 md:col-span-4">
-                <button type="submit" class="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">Guardar usuario</button>
-                <button id="CancelUserEdit" type="button" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Limpiar</button>
-            </div>
-        </form>
+        <div id="UserFormPanel" class="hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+            <h4 id="UserFormTitle" class="text-lg font-bold text-slate-950">Nuevo usuario</h4>
+            <div id="UsersMessage" class="hidden" role="status" aria-live="polite"></div>
+            <form id="UserForm" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <input id="UserId" type="hidden">
+                <label class="text-sm font-semibold text-slate-700">Usuario
+                    <input id="UserName" required maxlength="50" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="carlos.m">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">Contraseña
+                    <input id="UserPassword" type="password" required maxlength="72" autocomplete="new-password" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Contraseña">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">ID docente
+                    <input id="UserTeacher" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">ID estudiante
+                    <input id="UserStudent" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
+                </label>
+                <div class="flex gap-2 sm:col-span-2 xl:col-span-4">
+                    <button id="SaveUserButton" type="submit" class="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800 disabled:cursor-wait disabled:opacity-60">Guardar usuario</button>
+                    <button id="CancelUserEdit" type="button" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Cancelar</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
