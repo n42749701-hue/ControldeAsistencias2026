@@ -8,6 +8,13 @@ const titles = {
     home: 'Dashboard',
     users: 'Usuarios',
     students: 'Estudiantes',
+    docentes: 'Docentes',
+    cursos: 'Cursos',
+    materias: 'Materias',
+    asistencias: 'Asistencias',
+    asignaciones: 'Asignaciones',
+    inscripciones: 'Inscripciones',
+
 };
 function setActiveLink(view) {
     navLinks.forEach(link => {
@@ -39,6 +46,42 @@ const views = {
         app.innerHTML = await res.text();
         pageTitle.textContent = titles.students;
         setActiveLink('students');
+    },
+    docentes: async () => {
+        const res = await fetch('./src/views/docentes.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.docentes;
+        setActiveLink('docentes');
+    },
+    cursos: async () => {
+        const res = await fetch('./src/views/cursos.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.cursos;
+        setActiveLink('cursos');
+    },
+    materias: async () => {
+        const res = await fetch('./src/views/materias.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.materias;
+        setActiveLink('materias');
+    },
+    asistencias: async () => {
+        const res = await fetch('./src/views/asistencias.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.asistencias;
+        setActiveLink('asistencias');
+    },
+    asignaciones: async () => {
+        const res = await fetch('./src/views/asignaciones.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.asignaciones;
+        setActiveLink('asignaciones');
+    },
+    inscripciones: async () => {
+        const res = await fetch('./src/views/inscripciones.html');
+        app.innerHTML = await res.text();
+        pageTitle.textContent = titles.inscripciones;
+        setActiveLink('inscripciones');
     }
 };
 

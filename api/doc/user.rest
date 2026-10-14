@@ -20,10 +20,10 @@ POST http://api.asistenciasexto/users
 Content-Type: application/json
 
 {
-  "username": "admin22",
-  "password": "cambia-esta-clave",
+  "username": "admin23",
+  "password": "11111111",
   "id_docente": null,
-  "id_estudiante": null
+  "id_estudiante": 1
 }
 
 ### Eliminar Usuario

@@ -1,16 +1,16 @@
 <section class="space-y-6">
     <div class="space-y-4">
-        <div class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+        <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
             <div>
                 <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
                 <h3 class="mt-1 text-2xl font-bold text-slate-950">Usuarios</h3>
             </div>
-            <button id="ToggleUserForm" type="button" aria-expanded="false" aria-controls="UserFormPanel" class="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">
+            <button id="ToggleUserForm" type="button" aria-expanded="false" aria-controls="UserFormPanel" class="inline-flex items-center gap-2 rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">
                 <span data-icon="userPlus" data-icon-class="h-4 w-4"></span>
                 <span id="UserFormToggleLabel">Agregar usuario</span>
             </button>
         </div>
-        <div id="UserFormPanel" class="hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+        <div id="UserFormPanel" class="hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm" style="display: none;">
             <h4 id="UserFormTitle" class="text-lg font-bold text-slate-950">Nuevo usuario</h4>
             <div id="UsersMessage" class="hidden" role="status" aria-live="polite"></div>
             <form id="UserForm" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -28,7 +28,7 @@
                     <input id="UserStudent" type="number" min="1" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Opcional">
                 </label>
                 <div class="flex gap-2 sm:col-span-2 xl:col-span-4">
-                    <button id="SaveUserButton" type="submit" class="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800 disabled:cursor-wait disabled:opacity-60">Guardar usuario</button>
+                    <button id="SaveUserButton" type="submit" class="inline-flex items-center rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600 disabled:cursor-wait disabled:opacity-60">Guardar usuario</button>
                     <button id="CancelUserEdit" type="button" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Cancelar</button>
                 </div>
             </form>

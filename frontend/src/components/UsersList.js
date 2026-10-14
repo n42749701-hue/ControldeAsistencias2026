@@ -24,6 +24,7 @@ const setUserFormOpen = (isOpen) => {
     const panel = document.getElementById('UserFormPanel');
     const toggle = document.getElementById('ToggleUserForm');
     panel.classList.toggle('hidden', !isOpen);
+    panel.style.display = isOpen ? 'block' : 'none';
     toggle.setAttribute('aria-expanded', String(isOpen));
     document.getElementById('UserFormToggleLabel').textContent = isOpen ? 'Cerrar formulario' : 'Agregar usuario';
 };
