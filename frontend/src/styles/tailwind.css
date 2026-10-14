@@ -1,3 +1,4 @@
 @import "tailwindcss";
 @source "../views";
+@source "../components";
 @plugin "@iconify/tailwind4";

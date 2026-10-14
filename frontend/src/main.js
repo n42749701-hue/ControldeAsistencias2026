@@ -1,8 +1,26 @@
 import { initUsersCrud } from './components/UsersList.js';
+import { initStudentsCrud } from './components/StudentsList.js';
+import { mountIcons } from './utils/icons.js';
+import { initManagementCrud } from './components/ManagementCrud.js';
 
 const app = document.getElementById('app');
 const pageTitle = document.getElementById('pagetitle');
 const navLinks = document.querySelectorAll('[data-view]');
+
+const setAppContent = (html) => {
+    app.innerHTML = html;
+    mountIcons(app);
+};
+
+const showViewError = (error) => {
+    app.replaceChildren();
+    const message = document.createElement('p');
+    message.className = 'rounded-lg border border-red-200 bg-red-50 p-4 font-semibold text-red-700';
+    message.textContent = error.message || 'No se pudo cargar la vista.';
+    app.append(message);
+};
+
+mountIcons(document);
 
 const titles = {
     home: 'Dashboard',
@@ -30,67 +48,56 @@ function setActiveLink(view) {
 const views = {
     home: async () => {
         const res = await fetch('./src/views/home.html');
-        app.innerHTML = await res.text();
+        setAppContent(await res.text());
         pageTitle.textContent = titles.home;
         setActiveLink('home');
     },
     users: async () => {
         const res = await fetch('./src/views/users.html');
-        app.innerHTML = await res.text();
+        setAppContent(await res.text());
         pageTitle.textContent = titles.users;
         setActiveLink('users');
         await initUsersCrud();
     },
     students: async () => {
-        const res = await fetch('./src/views/students.html');
-        app.innerHTML = await res.text();
+        const res = await fetch('./src/views/students.html', { cache: 'no-store' });
+        if (!res.ok) {
+            throw new Error(`No se pudo cargar la vista de estudiantes (HTTP ${res.status}).`);
+        }
+        setAppContent(await res.text());
         pageTitle.textContent = titles.students;
         setActiveLink('students');
+        await initStudentsCrud();
     },
-    docentes: async () => {
-        const res = await fetch('./src/views/docentes.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.docentes;
-        setActiveLink('docentes');
-    },
-    cursos: async () => {
-        const res = await fetch('./src/views/cursos.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.cursos;
-        setActiveLink('cursos');
-    },
-    materias: async () => {
-        const res = await fetch('./src/views/materias.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.materias;
-        setActiveLink('materias');
-    },
-    asistencias: async () => {
-        const res = await fetch('./src/views/asistencias.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.asistencias;
-        setActiveLink('asistencias');
-    },
-    asignaciones: async () => {
-        const res = await fetch('./src/views/asignaciones.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.asignaciones;
-        setActiveLink('asignaciones');
-    },
-    inscripciones: async () => {
-        const res = await fetch('./src/views/inscripciones.html');
-        app.innerHTML = await res.text();
-        pageTitle.textContent = titles.inscripciones;
-        setActiveLink('inscripciones');
-    }
+    docentes: () => loadManagementView('docentes'),
+    cursos: () => loadManagementView('cursos'),
+    materias: () => loadManagementView('materias'),
+    asistencias: () => loadManagementView('asistencias'),
+    asignaciones: () => loadManagementView('asignaciones'),
+    inscripciones: () => loadManagementView('inscripciones')
 };
+
+async function loadManagementView(view) {
+    const res = await fetch(`./src/views/${view}.html`, { cache: 'no-store' });
+    if (!res.ok) {
+        throw new Error(`No se pudo cargar la vista ${titles[view]} (HTTP ${res.status}).`);
+    }
+    setAppContent(await res.text());
+    pageTitle.textContent = titles[view];
+    setActiveLink(view);
+    await initManagementCrud(view);
+}
 
 navLinks.forEach(link => {
     link.addEventListener('click', async (event) => {
         event.preventDefault();
         const view = link.dataset.view;
         if (views[view]) {
-            await views[view]();
+            try {
+                await views[view]();
+            } catch (error) {
+                showViewError(error);
+            }
         }
     });
 });

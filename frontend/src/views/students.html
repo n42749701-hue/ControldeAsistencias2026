@@ -1,1 +1,63 @@
-<h1>estudiantes</h1>
+<section class="space-y-6">
+    <div class="space-y-4">
+        <div class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
+                <h3 class="mt-1 text-2xl font-bold text-slate-950">Estudiantes</h3>
+            </div>
+            <button id="ToggleStudentForm" type="button" aria-expanded="false" aria-controls="StudentFormPanel" class="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800">
+                <span id="StudentFormToggleLabel">Agregar estudiante</span>
+            </button>
+        </div>
+        <div id="StudentFormPanel" class="hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm" style="display: none;">
+            <h4 id="StudentFormTitle" class="text-lg font-bold text-slate-950">Nuevo estudiante</h4>
+            <div id="StudentsMessage" class="hidden" role="status" aria-live="polite"></div>
+            <form id="StudentForm" class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <input id="StudentId" type="hidden">
+                <label class="text-sm font-semibold text-slate-700">Nombre
+                    <input id="StudentName" required maxlength="50" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Nombre">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">Apellido
+                    <input id="StudentSurname" required maxlength="50" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Apellido">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">Direccion
+                    <input id="StudentAddress" required maxlength="250" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Direccion">
+                </label>
+                <label class="text-sm font-semibold text-slate-700">Telefono
+                    <input id="StudentPhone" required maxlength="15" class="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 font-normal" placeholder="Telefono">
+                </label>
+                <div class="flex gap-2 sm:col-span-2 xl:col-span-4">
+                    <button id="SaveStudentButton" type="submit" class="inline-flex items-center rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-white hover:bg-cyan-800 disabled:cursor-wait disabled:opacity-60">Guardar estudiante</button>
+                    <button id="CancelStudentEdit" type="button" class="rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-cyan-700">Administracion</p>
+                <h3 class="mt-1 text-2xl font-bold text-slate-950">Listado de estudiantes</h3>
+            </div>
+            <span class="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-600">Base de asistencia</span>
+        </div>
+        <div class="mt-6 overflow-x-auto rounded-lg border border-slate-200">
+            <table class="min-w-full divide-y divide-slate-200 text-sm">
+                <thead class="bg-slate-50 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
+                    <tr>
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Nombre</th>
+                        <th class="px-4 py-3">Apellido</th>
+                        <th class="px-4 py-3">Direccion</th>
+                        <th class="px-4 py-3">Telefono</th>
+                        <th class="px-4 py-3 text-right">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="StudentsTableList" class="divide-y divide-slate-100 bg-white">
+                    <tr><td colspan="6" class="px-4 py-6 text-center text-slate-500">Cargando estudiantes...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
