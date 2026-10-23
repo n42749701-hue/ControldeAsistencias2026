@@ -155,8 +155,8 @@ class AsistenciasController{
             $errores[] = "El campo estado debe ser Presente, Ausente, Licencia o Retraso";
         }
 
-        if (!isset($data['observacion']) || trim((string) $data['observacion']) === "") {
-            $errores[] = "El campo observacion es obligatorio";
+        if (isset($data['observacion']) && (!is_string($data['observacion']) || strlen($data['observacion']) > 250)) {
+            $errores[] = "El campo observacion debe ser texto y no debe superar los 250 caracteres";
         }
 
         return $errores;

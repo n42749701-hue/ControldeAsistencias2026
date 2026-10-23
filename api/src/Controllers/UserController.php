@@ -24,6 +24,52 @@ class UserController
         ]);
     }
 
+    public function login()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
+            http_response_code(400);
+            echo json_encode([
+                "estado" => false,
+                "message" => "Los datos enviados no contienen un JSON válido",
+            ]);
+            return;
+        }
+
+        if (
+            !isset($data['username'], $data['password']) ||
+            !is_string($data['username']) ||
+            !is_string($data['password']) ||
+            trim($data['username']) === '' ||
+            $data['password'] === ''
+        ) {
+            http_response_code(422);
+            echo json_encode([
+                "estado" => false,
+                "message" => "El usuario y la contraseña son obligatorios",
+            ]);
+            return;
+        }
+
+        $user = Users::findByUsername(trim($data['username']));
+        if (!$user || !password_verify($data['password'], $user['password_hash'])) {
+            http_response_code(401);
+            echo json_encode([
+                "estado" => false,
+                "message" => "Usuario o contraseña incorrectos",
+            ]);
+            return;
+        }
+
+        unset($user['password_hash']);
+        echo json_encode([
+            "estado" => true,
+            "message" => "Inicio de sesión correcto",
+            "usuario" => $user,
+        ]);
+    }
+
     public function update($id)
     {
         $jsonData = file_get_contents('php://input');
@@ -84,7 +130,7 @@ class UserController
             ]);
             return;
         }
-
+        
         $errores = $this->validarDatos($data, true);
 
         if (count($errores) > 0) {

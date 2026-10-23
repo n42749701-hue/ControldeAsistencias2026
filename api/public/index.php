@@ -30,6 +30,7 @@ $route->add('GET', '/users', 'UserController@getAll');
 $route->add('GET', '/users/{id}', 'UserController@getById');
 $route->add('PUT', '/users/{id}', 'UserController@update');
 $route->add('POST', '/users', 'UserController@add');
+$route->add('POST', '/login', 'UserController@login');
 $route->add('DELETE', '/users/{id}', 'UserController@delete');
 //direccion de estudiantes
 $route->add('GET', '/estudiantes', 'EstudianteController@getAll');

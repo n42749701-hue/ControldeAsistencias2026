@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102c2b">
+    <title>Iniciar sesión | Control de Asistencias</title>
+    <link href="../styles/output.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-[#f5f4ef] text-slate-950">
+    <main class="min-h-screen lg:grid lg:grid-cols-2">
+        <section class="relative flex min-h-[360px] flex-col overflow-hidden bg-[#102c2b] px-6 py-7 text-white sm:px-10 sm:py-9 lg:min-h-screen lg:px-14 lg:py-12 xl:px-20" aria-label="Información del sistema">
+            <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full border border-white/10"></div>
+            <div aria-hidden="true" class="pointer-events-none absolute -right-12 -top-12 h-56 w-56 rounded-full border border-white/10"></div>
+            <div aria-hidden="true" class="pointer-events-none absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-[#d1f36a]/10 blur-3xl"></div>
+
+            <a href="../../index.html" class="relative z-10 flex w-fit items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d1f36a]">
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-[#d1f36a] text-[#102c2b]">
+                    <span aria-hidden="true" class="icon-[lucide--clipboard-check] h-6 w-6"></span>
+                </span>
+                <span>
+                    <span class="block text-[10px] font-bold uppercase tracking-[0.24em] text-[#d1f36a]">Sistema escolar</span>
+                    <span class="mt-0.5 block text-base font-bold tracking-tight sm:text-lg">Control de Asistencias</span>
+                </span>
+            </a>
+
+            <div class="relative z-10 my-auto max-w-xl py-12 lg:py-20">
+                <p class="mb-5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#d1f36a]">
+                    <span class="h-px w-8 bg-[#d1f36a]"></span>
+                    Ciclo lectivo 2026
+                </p>
+                <h1 class="max-w-lg text-4xl font-black leading-[1.08] tracking-tight sm:text-5xl xl:text-6xl">Cada día cuenta.<br><span class="text-[#d1f36a]">Cada paso también.</span></h1>
+                <p class="mt-6 max-w-md text-base leading-7 text-slate-300 sm:text-lg">Un espacio sencillo para acompañar el aprendizaje y mantener a toda la comunidad escolar conectada.</p>
+
+                <div class="mt-10 max-w-md rounded-2xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-sm sm:p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">Tu institución, al día</p>
+                            <p class="mt-2 text-lg font-bold">Presencia que inspira</p>
+                        </div>
+                        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#d1f36a] text-[#102c2b]">
+                            <span aria-hidden="true" class="icon-[lucide--calendar-check-2] h-6 w-6"></span>
+                        </span>
+                    </div>
+                    <div class="mt-6 flex items-center gap-3">
+                        <div class="flex -space-x-2" aria-hidden="true">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#183a38] bg-[#f4a261] text-[10px] font-black text-[#102c2b]">E</span>
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#183a38] bg-[#8ecae6] text-[10px] font-black text-[#102c2b]">D</span>
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#183a38] bg-[#d1f36a] text-[10px] font-black text-[#102c2b]">F</span>
+                        </div>
+                        <p class="text-sm text-slate-300">Estudiantes, docentes y familias</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="relative z-10 hidden text-xs font-medium tracking-wide text-slate-400 lg:block">PRESENTES EN CADA PASO DEL APRENDIZAJE</p>
+        </section>
+
+        <section class="flex min-h-[calc(100vh-360px)] items-center justify-center px-6 py-12 sm:px-10 lg:min-h-screen lg:px-12 xl:px-20" aria-label="Iniciar sesión">
+            <div class="w-full max-w-md">
+                <div class="mb-9">
+                    <p class="text-sm font-semibold text-[#56706c]">Bienvenido de nuevo</p>
+                    <h2 class="mt-2 text-3xl font-black tracking-tight text-[#102c2b] sm:text-4xl">Inicia sesión</h2>
+                    <p class="mt-3 text-sm leading-6 text-slate-600">Ingresa tus credenciales institucionales para continuar.</p>
+                </div>
+
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label for="username" class="block text-sm font-bold text-slate-800">Nombre de usuario</label>
+                        <div class="mt-2 flex items-center gap-3 rounded-xl border border-slate-300 bg-white px-4 transition focus-within:border-[#507b67] focus-within:ring-4 focus-within:ring-[#507b67]/10">
+                            <span aria-hidden="true" class="icon-[lucide--user-round] h-5 w-5 shrink-0 text-[#507b67]"></span>
+                            <input id="username" name="username" type="text" required autocomplete="username" placeholder="Ej. maria.perez" class="min-w-0 flex-1 bg-transparent py-3.5 text-slate-950 outline-none placeholder:text-slate-400">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-bold text-slate-800">Contraseña</label>
+                        <div class="mt-2 flex items-center rounded-xl border border-slate-300 bg-white pr-3 transition focus-within:border-[#507b67] focus-within:ring-4 focus-within:ring-[#507b67]/10">
+                            <span aria-hidden="true" class="icon-[lucide--lock-keyhole] ml-4 h-5 w-5 shrink-0 text-[#507b67]"></span>
+                            <input id="password" name="password" type="password" required autocomplete="current-password" placeholder="Escribe tu contraseña" class="min-w-0 flex-1 rounded-xl bg-transparent px-4 py-3.5 text-slate-950 outline-none placeholder:text-slate-400">
+                            <button id="togglePassword" type="button" aria-label="Mostrar contraseña" aria-pressed="false" class="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-[#102c2b] focus-visible:outline-2 focus-visible:outline-[#507b67]">
+                                <span id="passwordEyeIcon" aria-hidden="true" class="icon-[lucide--eye] h-5 w-5"></span>
+                                <span id="passwordEyeOffIcon" aria-hidden="true" class="icon-[lucide--eye-off] hidden h-5 w-5"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p id="loginMessage" class="hidden rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-800" role="status" aria-live="polite"></p>
+
+                    <button type="submit" class="group flex w-full items-center justify-between rounded-xl bg-[#102c2b] px-5 py-4 text-sm font-bold text-white transition hover:bg-[#1c4943] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#507b67] disabled:cursor-wait disabled:opacity-70">
+                        <span>Ingresar a mi cuenta</span>
+                        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#d1f36a] text-[#102c2b] transition group-hover:translate-x-0.5">
+                            <span aria-hidden="true" class="icon-[lucide--arrow-right] h-4 w-4"></span>
+                        </span>
+                    </button>
+                </form>
+
+                <div class="mt-8 border-t border-slate-200 pt-6">
+                    <p class="text-center text-sm leading-6 text-slate-600">¿No tienes acceso? <span class="font-bold text-[#315d51]">Consulta con el administrador.</span></p>
+                    <p class="mt-8 flex items-center justify-center gap-2 text-xs font-medium text-slate-500">
+                        <span aria-hidden="true" class="icon-[lucide--shield-check] h-4 w-4 text-[#507b67]"></span>
+                        Acceso seguro para la comunidad educativa
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { api } from '../utils/api.js';
+
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordEyeIcon = document.getElementById('passwordEyeIcon');
+        const passwordEyeOffIcon = document.getElementById('passwordEyeOffIcon');
+        const loginForm = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        const submitLabel = submitButton.querySelector('span:first-child');
+
+        togglePassword.addEventListener('click', () => {
+            const shouldShowPassword = passwordInput.type === 'password';
+            passwordInput.type = shouldShowPassword ? 'text' : 'password';
+            passwordEyeIcon.classList.toggle('hidden', shouldShowPassword);
+            passwordEyeOffIcon.classList.toggle('hidden', !shouldShowPassword);
+            togglePassword.setAttribute('aria-pressed', String(shouldShowPassword));
+            togglePassword.setAttribute('aria-label', shouldShowPassword ? 'Ocultar contraseña' : 'Mostrar contraseña');
+        });
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!loginForm.reportValidity() || submitButton.disabled) return;
+
+            submitButton.disabled = true;
+            submitLabel.textContent = 'Verificando...';
+            loginMessage.classList.add('hidden');
+
+            try {
+                const response = await api.post('login', {
+                    username: document.getElementById('username').value.trim(),
+                    password: passwordInput.value,
+                });
+
+                if (response.estado !== true) {
+                    loginMessage.textContent = response.message || 'No se pudo iniciar sesión.';
+                    loginMessage.className = 'rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700';
+                    loginMessage.classList.remove('hidden');
+                    return;
+                }
+
+                sessionStorage.setItem('controlAsistenciasUser', JSON.stringify(response.usuario));
+                loginMessage.textContent = `Credenciales verificadas. Bienvenido, ${response.usuario.username}.`;
+                loginMessage.className = 'rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-semibold text-emerald-800';
+                loginMessage.classList.remove('hidden');
+                window.location.replace('../../index.html');
+            } catch (error) {
+                console.error('Error al iniciar sesión:', error);
+                loginMessage.textContent = 'No se pudo conectar con el servidor. Inténtalo nuevamente.';
+                loginMessage.className = 'rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700';
+                loginMessage.classList.remove('hidden');
+            } finally {
+                submitButton.disabled = false;
+                submitLabel.textContent = 'Ingresar a mi cuenta';
+            }
+        });
+    </script>
+</body>
+</html>

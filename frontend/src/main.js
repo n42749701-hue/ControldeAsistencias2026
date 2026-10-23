@@ -2,10 +2,17 @@ import { initUsersCrud } from './components/UsersList.js';
 import { initStudentsCrud } from './components/StudentsList.js';
 import { mountIcons } from './utils/icons.js';
 import { initManagementCrud } from './components/ManagementCrud.js';
+import { initAttendanceRegister } from './components/AttendanceRegister.js';
 
 const app = document.getElementById('app');
 const pageTitle = document.getElementById('pagetitle');
 const navLinks = document.querySelectorAll('[data-view]');
+const logoutButton = document.getElementById('logoutButton');
+
+logoutButton.addEventListener('click', () => {
+    sessionStorage.removeItem('controlAsistenciasUser');
+    window.location.replace('./src/views/login.html');
+});
 
 const setAppContent = (html) => {
     app.innerHTML = html;
@@ -72,7 +79,7 @@ const views = {
     docentes: () => loadManagementView('docentes'),
     cursos: () => loadManagementView('cursos'),
     materias: () => loadManagementView('materias'),
-    asistencias: () => loadManagementView('asistencias'),
+    asistencias: () => loadAttendanceView(),
     asignaciones: () => loadManagementView('asignaciones'),
     inscripciones: () => loadManagementView('inscripciones')
 };
@@ -86,6 +93,17 @@ async function loadManagementView(view) {
     pageTitle.textContent = titles[view];
     setActiveLink(view);
     await initManagementCrud(view);
+}
+
+async function loadAttendanceView() {
+    const res = await fetch('./src/views/asistencias.html', { cache: 'no-store' });
+    if (!res.ok) {
+        throw new Error(`No se pudo cargar la vista ${titles.asistencias} (HTTP ${res.status}).`);
+    }
+    setAppContent(await res.text());
+    pageTitle.textContent = titles.asistencias;
+    setActiveLink('asistencias');
+    await initAttendanceRegister();
 }
 
 navLinks.forEach(link => {

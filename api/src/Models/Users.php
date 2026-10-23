@@ -21,6 +21,13 @@ class Users
         return count($result) > 0 ? $result[0] : null;
     }
 
+    public static function findByUsername($username)
+    {
+        $sql = "SELECT id, username, password_hash, id_docente, id_estudiante FROM USUARIOS WHERE username=:username LIMIT 1";
+        $result = ConexionPDO::query($sql, [':username' => $username]);
+        return count($result) > 0 ? $result[0] : null;
+    }
+
     public static function update($id, $data)
     {
         if (isset($data['id'])) {

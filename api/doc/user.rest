@@ -26,5 +26,14 @@ Content-Type: application/json
   "id_estudiante": 1
 }
 
+### Login Usuario
+POST http://api.asistenciasexto/login
+Content-Type: application/json
+
+{
+  "username": "nelson",
+  "password": "12345678"
+}
+
 ### Eliminar Usuario
 DELETE http://api.asistenciasexto/users/14
