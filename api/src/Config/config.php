@@ -1,9 +1,17 @@
 <?php
-$config = parse_ini_file(__DIR__ . '/../../../.env');
+$path = dirname(__DIR__, 2) . '/.env';
 
-if ($config === false) {
-	throw new RuntimeException('No se encontro el archivo .env');
+// 1. Si el archivo .env existe (en local), lo lee. Si no existe (en Render), usa las variables del sistema.
+if (file_exists($path)) {
+    $config = parse_ini_file($path);
+} else {
+    $config = [];
 }
+// $config = parse_ini_file(__DIR__ . '/../../.env');
+
+// if ($config === false) {
+// 	throw new RuntimeException('No se encontro el archivo .env');
+// }
 
 define('HOST', $config['DB_HOST'] ?? '');
 define('DATABASE', $config['DB_NAME'] ?? '');
