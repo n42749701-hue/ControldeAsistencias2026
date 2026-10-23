@@ -3,6 +3,7 @@ if (($_SERVER['HTTP_ORIGIN'] ?? '') === 'http://frontend.asistenciasexto') {
     header('Access-Control-Allow-Origin: http://frontend.asistenciasexto');
     header('Vary: Origin');
 }
+header("Access-Control")
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
