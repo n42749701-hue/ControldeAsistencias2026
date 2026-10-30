@@ -120,4 +120,8 @@ navLinks.forEach(link => {
     });
 });
 
-views.home();
+if (sessionStorage.getItem('controlAsistenciasUser')) {
+    views.home();
+} else {
+    window.location.replace('./src/views/login.html');
+}
