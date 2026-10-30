@@ -1,4 +1,4 @@
-const apiUrl = 'http://api.asistenciasexto';
+const apiUrl = 'https://controldeasistencias2026-2.onrender.com';
 
 const buildUrl = (endpoint) => `${apiUrl}/${String(endpoint).replace(/^\/+/, '')}`;
 
