@@ -155,7 +155,9 @@
                 window.location.replace('../../index.html');
             } catch (error) {
                 console.error('Error al iniciar sesión:', error);
-                loginMessage.textContent = 'No se pudo conectar con el servidor. Inténtalo nuevamente.';
+                loginMessage.textContent = error instanceof TypeError
+                    ? 'No se pudo conectar con el servidor. Verifica que Apache y la API estén activos.'
+                    : `No se pudo completar el inicio de sesión: ${error.message}`;
                 loginMessage.className = 'rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700';
                 loginMessage.classList.remove('hidden');
             } finally {

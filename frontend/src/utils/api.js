@@ -28,7 +28,11 @@ export const api = {
             body: JSON.stringify(payload),
         });
 
-        return response.json();
+        try {
+            return await response.json();
+        } catch {
+            throw new Error(`El servidor respondió con HTTP ${response.status}, pero no envió JSON válido.`);
+        }
     },
 
     put: async (endpoint, payload) => {
